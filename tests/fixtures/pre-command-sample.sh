@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo hello from file
+echo hello from pre-command file

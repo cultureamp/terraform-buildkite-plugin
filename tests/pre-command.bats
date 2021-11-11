@@ -17,5 +17,5 @@ load '/usr/local/lib/bats/load.bash'
   run $PWD/hooks/pre-command
 
   assert_success
-  assert_output --partial "hello from file"
+  assert_output --partial "hello from pre-command file"
 }

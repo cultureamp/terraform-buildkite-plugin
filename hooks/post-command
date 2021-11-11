@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# if a pre-command has been specified, run it now
+POSTCOMMAND=${BUILDKITE_PLUGIN_TERRAFORM_POSTCOMMAND:-false}
+
+if [ "$POSTCOMMAND" != "false" ]; then
+    if [ -f "$POSTCOMMAND" ]; then
+        # if it's a file, then just source it
+        source $POSTCOMMAND
+    else
+        # otherwise, attempt to execute it directly
+        eval $POSTCOMMAND
+    fi
+fi
