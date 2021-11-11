@@ -29,6 +29,8 @@ configuration:
       type: boolean
     precommand:
       type: string
+    postcommand:
+      type: string
     extra_plan_args:
       type: string
     require_tfvar_file:
