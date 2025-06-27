@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       markdown_any_changed: ${{ steps.changed-files.outputs.markdown_any_changed }}
+      golang_any_changed: ${{ steps.changed-files.outputs.golang_any_changed }}
+
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
@@ -19,6 +21,10 @@ jobs:
           files_yaml: |
             markdown:
               - '**/*.md'
+            golang:
+              - '**/*.go'
+              - '**/go.mod'
+              - '**/go.sum'
 
   markdown:
     needs: [changed-files]
@@ -26,6 +32,14 @@ jobs:
       github.ref == 'refs/heads/main' ||
       needs.changed-files.outputs.markdown_any_changed == 'true'
     uses: .github/workflows/pipeline.yaml
+    secrets: inherit
+
+  golang:
+    needs: [changed-files]
+    if: |
+      github.ref == 'refs/heads/main' ||
+      needs.changed-files.outputs.golang-checks_any_changed == 'true'
+    uses: .github/workflows/go-checks.yaml
     secrets: inherit
 
   pipeline-success:
