@@ -34,30 +34,47 @@ jobs:
           go-version-file: go.mod
           cache-dependency-path: go.sum
 
-      - name: Test
-        run: go test -cover -coverprofile=coverage.txt ./...
+      # Install gotestfmt on the VM running the action.
+      - name: Set up gotestfmt
+        uses: GoTestTools/gotestfmt-action@8b4478c7019be847373babde9300210e7de34bfb # v2.2.0
+        with:
+          # Optional: pass the gotestfmt version you want to run.
+          version: v2.5.0
 
-      - name: Archive code coverage results
+      # Run tests with nice formatting. Save the original log in /tmp/gotest.log
+      - name: Run tests
+        run: |
+          set -euo pipefail
+          go test -json -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
+
+      # Upload the original go test log as an artifact for later review.
+      - name: Upload test log
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: code-coverage
-          path: coverage.txt
+          name: test-log
+          path: /tmp/gotest.log
+          if-no-files-found: error
 
-  code-coverage-report:
-    runs-on: ubuntu-latest
-    needs: unit-tests
-    permissions:
-      contents: read
-      actions: read
-      pull-requests: write
-    steps:
-      - uses: fgrosse/go-coverage-report@8c1d1a09864211d258937b1b1a5b849f7e4f2682 # v1.2.0
+      # - name: Archive code coverage results
+      #   uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      #   with:
+      #     name: code-coverage
+      #     path: coverage.txt
 
+  # code-coverage-report:
+  #   runs-on: ubuntu-latest
+  #   needs: unit-tests
+  #   permissions:
+  #     contents: read
+  #     actions: read
+  #     pull-requests: write
+  #   steps:
+  #     - uses: fgrosse/go-coverage-report@8c1d1a09864211d258937b1b1a5b849f7e4f2682 # v1.2.0
 
-    # TODO:
-    # e2e tests
-    # integration tests
-    # go vet tests
-    # go fmt tests
-    # go mod tidy tests ?
-    # go mod verify tests ?
+  # TODO:
+  # e2e tests
+  # integration tests
+  # go vet tests
+  # go fmt tests
+  # go mod tidy tests ?
+  # go mod verify tests ?
