@@ -28,7 +28,7 @@ func main() {
 		Name: "terraform-buildkite-plugin",
 		// Version indicates the current version of the plugin.
 		// This is used for logging and diagnostic purposes.
-		Version: "1.0.0",
+		Version: "0.0.1",
 	}
 
 	// Configure the logger for console output with CI-friendly formatting.

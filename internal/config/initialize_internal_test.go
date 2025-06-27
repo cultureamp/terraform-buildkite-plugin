@@ -24,7 +24,7 @@ func TestGetPluginName(t *testing.T) {
 		}{
 			{
 				name:  "github URL with version",
-				input: "github.com/org/terraform-buildkite-plugin#v1.0.0",
+				input: "github.com/org/terraform-buildkite-plugin#v0.0.1",
 				want:  "terraform-buildkite-plugin",
 			},
 			{
@@ -34,7 +34,7 @@ func TestGetPluginName(t *testing.T) {
 			},
 			{
 				name:  "https github URL",
-				input: "https://github.com/org/terraform-buildkite-plugin#v1.0.0",
+				input: "https://github.com/org/terraform-buildkite-plugin#v0.0.1",
 				want:  "terraform-buildkite-plugin",
 			},
 			{
@@ -84,11 +84,11 @@ func TestUnmarshalPlugins(t *testing.T) {
 	cfg := NewConfig().(*config)
 
 	t.Run("valid plugin config", func(t *testing.T) {
-		data := `[{"github.com/org/plugin#v1.0.0": {"mode": "plan"}}]`
+		data := `[{"github.com/org/plugin#v0.0.1": {"mode": "plan"}}]`
 		plugins, err := cfg.unmarshalPlugins(data)
 		require.NoError(t, err)
 		assert.Len(t, plugins, 1)
-		assert.Contains(t, plugins[0], "github.com/org/plugin#v1.0.0")
+		assert.Contains(t, plugins[0], "github.com/org/plugin#v0.0.1")
 	})
 
 	t.Run("invalid JSON", func(t *testing.T) {
@@ -114,7 +114,7 @@ func TestFindRawPlugin(t *testing.T) {
 
 	t.Run("plugin found", func(t *testing.T) {
 		data := []map[string]json.RawMessage{
-			{"github.com/org/terraform-buildkite-plugin#v1.0.0": json.RawMessage(`{"mode": "plan"}`)},
+			{"github.com/org/terraform-buildkite-plugin#v0.0.1": json.RawMessage(`{"mode": "plan"}`)},
 		}
 		plugin, err := cfg.findRawPlugin(data, "terraform-buildkite-plugin")
 		require.NoError(t, err)
@@ -123,7 +123,7 @@ func TestFindRawPlugin(t *testing.T) {
 
 	t.Run("plugin not found", func(t *testing.T) {
 		data := []map[string]json.RawMessage{
-			{"github.com/org/other-plugin#v1.0.0": json.RawMessage(`{"mode": "plan"}`)},
+			{"github.com/org/other-plugin#v0.0.1": json.RawMessage(`{"mode": "plan"}`)},
 		}
 		plugin, err := cfg.findRawPlugin(data, "terraform-buildkite-plugin")
 		require.Error(t, err)

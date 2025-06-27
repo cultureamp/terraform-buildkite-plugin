@@ -22,7 +22,7 @@ func TestNewConfigOptions(t *testing.T) {
 // Tests for WithPluginsEnv function.
 func TestWithPluginsEnv(t *testing.T) {
 	t.Run("applies environment override", func(t *testing.T) {
-		pluginConfig := `[{"github.com/org/terraform-buildkite-plugin#v1.0.0": {"mode": "plan"}}]`
+		pluginConfig := `[{"github.com/org/terraform-buildkite-plugin#v0.0.1": {"mode": "plan"}}]`
 		t.Setenv("CUSTOM_PLUGINS_ENV", pluginConfig)
 
 		cfg := config.NewConfig(config.WithPluginsEnv("CUSTOM_PLUGINS_ENV"))
@@ -45,7 +45,7 @@ func TestInitializePlugin(t *testing.T) {
 			// Create a temporary directory for the test
 			workingDir := t.TempDir()
 
-			pluginConfig := `[{"github.com/org/terraform-buildkite-plugin#v1.0.0": {
+			pluginConfig := `[{"github.com/org/terraform-buildkite-plugin#v0.0.1": {
 				"mode": "apply",
 				"working": {
 					"directory": "` + workingDir + `"
@@ -110,7 +110,7 @@ func TestInitializePlugin(t *testing.T) {
 		})
 
 		t.Run("plugin with complex output configuration", func(t *testing.T) {
-			pluginConfig := `[{"github.com/org/terraform-buildkite-plugin#v1.0.0": {
+			pluginConfig := `[{"github.com/org/terraform-buildkite-plugin#v0.0.1": {
 				"mode": "plan",
 				"outputs": [
 					{
@@ -168,7 +168,7 @@ func TestInitializePlugin(t *testing.T) {
 
 	t.Run("environment variable overrides", func(t *testing.T) {
 		t.Run("environment variables override JSON defaults", func(t *testing.T) {
-			pluginConfig := `[{"github.com/org/terraform-buildkite-plugin#v1.0.0": {"mode": "plan"}}]`
+			pluginConfig := `[{"github.com/org/terraform-buildkite-plugin#v0.0.1": {"mode": "plan"}}]`
 			t.Setenv("BUILDKITE_PLUGINS", pluginConfig)
 			t.Setenv("BUILDKITE_PARALLEL_JOB", "2")
 			t.Setenv("BUILDKITE_PARALLEL_JOB_COUNT", "5")
@@ -194,7 +194,7 @@ func TestInitializePlugin(t *testing.T) {
 		})
 
 		t.Run("JSON overrides environment variables", func(t *testing.T) {
-			pluginConfig := `[{"github.com/org/terraform-buildkite-plugin#v1.0.0": {
+			pluginConfig := `[{"github.com/org/terraform-buildkite-plugin#v0.0.1": {
 				"mode": "plan"
 			}}]`
 			t.Setenv("BUILDKITE_PLUGINS", pluginConfig)
@@ -224,13 +224,13 @@ func TestInitializePlugin(t *testing.T) {
 			{"malformed JSON", `[{"key": }]`, "failed to parse plugin configuration"},
 			{
 				"plugin not found",
-				`[{"github.com/org/other-plugin#v1.0.0": {"mode": "plan"}}]`,
+				`[{"github.com/org/other-plugin#v0.0.1": {"mode": "plan"}}]`,
 				"could not initialize plugin",
 			},
 			{"empty plugin array", "[]", "could not initialize plugin"},
 			{
 				"invalid plugin structure (parseRawPlugin fails)",
-				`[{"github.com/org/terraform-buildkite-plugin#v1.0.0": {"mode": {"invalid": "structure"}}}]`,
+				`[{"github.com/org/terraform-buildkite-plugin#v0.0.1": {"mode": {"invalid": "structure"}}}]`,
 				"failed to parse plugin configuration",
 			},
 		}
@@ -259,15 +259,15 @@ func TestInitializePlugin(t *testing.T) {
 		}{
 			{
 				"missing required mode",
-				`[{"github.com/org/terraform-buildkite-plugin#v1.0.0": {}}]`,
+				`[{"github.com/org/terraform-buildkite-plugin#v0.0.1": {}}]`,
 				"failed to validate config",
 			},
 			{
 				"invalid mode",
-				`[{"github.com/org/terraform-buildkite-plugin#v1.0.0": {"mode": "invalid"}}]`,
+				`[{"github.com/org/terraform-buildkite-plugin#v0.0.1": {"mode": "invalid"}}]`,
 				"failed to validate config",
 			},
-			{"both working_directory and working_directories", `[{"github.com/org/terraform-buildkite-plugin#v1.0.0": {
+			{"both working_directory and working_directories", `[{"github.com/org/terraform-buildkite-plugin#v0.0.1": {
 				"mode": "plan",
 				"working": {
 					"directory": "/path",
@@ -276,7 +276,7 @@ func TestInitializePlugin(t *testing.T) {
 			}}]`, "failed to validate config"},
 			{
 				"working_directories with both parent_directory and artifact",
-				`[{"github.com/org/terraform-buildkite-plugin#v1.0.0": {
+				`[{"github.com/org/terraform-buildkite-plugin#v0.0.1": {
 				"mode": "plan",
 				"working": {
 					"directories": {
