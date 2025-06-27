@@ -142,7 +142,7 @@ lint-markdown:
 [group('lint')]
 [group('tools')]
 lint-shellcheck:
-    bash -O globstar -c 'shellcheck **/*.bash ./hooks/command'
+    bash -O globstar -c 'shellcheck **/*.bash ./hooks/*'
 
 # Run actionlint for linting github action files
 [group('lint')]
