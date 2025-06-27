@@ -18,6 +18,10 @@ jobs:
           go-version-file: go.mod
           cache-dependency-path: go.sum
 
+      - uses: extractions/setup-just@v3
+        with:
+          just-version: 1.40.0
+
       - name: Check Go Modules
         run: just ensure-deps
 
