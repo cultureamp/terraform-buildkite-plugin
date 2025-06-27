@@ -142,9 +142,13 @@ lint-markdown:
 [group('lint')]
 [group('tools')]
 lint-shellcheck:
-    #!/usr/bin/env bash
-    set -euxo pipefail
-    shellcheck **/*.bash
+    bash -O globstar -c 'shellcheck **/*.bash ./hooks/command'
+
+# Run actionlint for linting github action files
+[group('lint')]
+[group('tools')]
+lint-github-actions:
+    actionlint
 
 # Run Buildkite plugin linting (requires Docker)
 [group('lint')]
@@ -154,7 +158,7 @@ lint-buildkite-plugin:
 
 # Run all linting commands (Go, spellcheck, markdown)
 [group('lint')]
-lint: lint-go lint-cspell lint-markdown lint-buildkite-plugin
+lint: lint-go lint-cspell lint-markdown lint-buildkite-plugin lint-shellcheck lint-github-actions
 
 # Formatting and Static Analysis
 
