@@ -52,3 +52,12 @@ jobs:
       pull-requests: write
     steps:
       - uses: fgrosse/go-coverage-report@8c1d1a09864211d258937b1b1a5b849f7e4f2682 # v1.2.0
+
+
+    # TODO:
+    # e2e tests
+    # integration tests
+    # go vet tests
+    # go fmt tests
+    # go mod tidy tests ?
+    # go mod verify tests ?
