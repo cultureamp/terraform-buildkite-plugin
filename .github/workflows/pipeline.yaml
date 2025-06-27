@@ -12,6 +12,7 @@ jobs:
     outputs:
       markdown_any_changed: ${{ steps.changed-files.outputs.markdown_any_changed }}
       golang_any_changed: ${{ steps.changed-files.outputs.golang_any_changed }}
+      action_any_changed: ${{ steps.changed-files.outputs.action_any_changed }}
 
     steps:
       - name: Checkout
@@ -29,14 +30,16 @@ jobs:
           base_sha: refs/remotes/origin/main
           files_yaml: |
             markdown:
-              - "**.md"
+              - '**.md'
             golang:
-              - "**.go"
-              - "go.mod"
-              - "go.sum"
-              - "README.md"
-              - ".golangci.yml"
-              - ".goreleaser.yaml"
+              - '**.go'
+              - 'go.mod'
+              - 'go.sum'
+              - 'README.md'
+              - '.golangci.yml'
+              - '.goreleaser.yaml'
+            action:
+              - '.github/**'
 
   markdown:
     needs: [find-changed-files]
@@ -44,6 +47,14 @@ jobs:
       github.ref == 'refs/heads/main' ||
       needs.find-changed-files.outputs.markdown_any_changed == 'true'
     uses: ./.github/workflows/markdown.yml
+    secrets: inherit
+
+  action:
+    needs: [find-changed-files]
+    if: |
+      github.ref == 'refs/heads/main' ||
+      needs.find-changed-files.outputs.action_any_changed == 'true'
+    uses: ./.github/workflows/actionlint.yml
     secrets: inherit
 
   golang:
@@ -59,10 +70,11 @@ jobs:
     needs:
       - markdown
       - golang
+      - action
     if: always()
     steps:
       - name: Decide whether the needed jobs succeeded or failed
         uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe # v1
         with:
-          allowed-skips: "markdown,golang"
+          allowed-skips: "markdown,golang,action"
           jobs: ${{ toJSON(needs) }}
