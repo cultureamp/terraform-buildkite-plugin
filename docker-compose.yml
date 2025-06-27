@@ -1,0 +1,6 @@
+services:
+  buildkite-plugin-lint:
+    image: buildkite/plugin-linter
+    command: ["--id", "xphir/terraform"]
+    volumes:
+      - ".:/plugin:ro"
