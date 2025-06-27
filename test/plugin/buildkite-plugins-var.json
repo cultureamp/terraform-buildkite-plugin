@@ -1,0 +1,26 @@
+[
+  {
+    "github.com/buildkite-plugins/monorepo-diff-buildkite-plugin#v1.3.0": {
+      "diff": "git diff --name-only origin/main...HEAD",
+      "wait": true,
+      "watch": []
+    },
+    "github.com/xphir/terraform-buildkite-plugin#v0.0.1": {
+      "mode": "apply",
+      "working": {
+        "directories": {
+          "parent_directory": "./test/data/working-directories"
+        }
+      },
+      "validations": [
+        {
+          "opa": {
+            "bundle": "test/data/opa/",
+            "decision": "terraform/analysis/score"
+          }
+        }
+      ],
+      "outputs": []
+    }
+  }
+]
