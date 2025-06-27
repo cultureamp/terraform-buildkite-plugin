@@ -39,7 +39,7 @@ jobs:
     if: |
       github.ref == 'refs/heads/main' ||
       needs.changed-files.outputs.golang_any_changed == 'true'
-    uses: ./.github/workflows/ci.yml
+    uses: ./.github/workflows/go-checks.yml
     secrets: inherit
 
   pipeline-success:
