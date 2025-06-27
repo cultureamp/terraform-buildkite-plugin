@@ -41,22 +41,22 @@ Add the following lines to your `pipeline.yml`:
 
 ```yml
 steps:
-	- label: ":terraform: Plan infrastructure"
-		plugins:
-			- xphir/terraform#v0.0.1:
-					mode: plan
-					working:
-						directories:
-							parent_directory: ./terraform
-							name_regex: ".*"
-					validations:
-						- opa:
-								bundle: ./policies
-								query: "data.terraform.allow"
-					outputs:
-						- buildkite_annotation:
-								template: "Plan completed for {{.WorkingDirectory}}"
-								context: terraform-plan
+  - label: ":terraform: Plan infrastructure"
+    plugins:
+      - xphir/terraform#v0.0.1:
+          mode: plan
+          working:
+            directories:
+              parent_directory: ./terraform
+              name_regex: ".*"
+          validations:
+            - opa:
+                bundle: ./policies
+                query: "data.terraform.allow"
+          outputs:
+            - buildkite_annotation:
+                template: "Plan completed for {{.WorkingDirectory}}"
+                context: terraform-plan
 ```
 
 ## Configuration
@@ -115,8 +115,8 @@ Terraform execution options:
 
 - `exec_path` (string) - Path to the Terraform executable
 - `init_options` (object) - Options for terraform init command
-	- `plugin_dir` (Required, string) - Directory containing Terraform plugins
-	- `get_plugins` (Required, boolean) - Whether to automatically download plugins
+  - `plugin_dir` (Required, string) - Directory containing Terraform plugins
+  - `get_plugins` (Required, boolean) - Whether to automatically download plugins
 
 ## Releasing
 
