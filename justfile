@@ -186,7 +186,7 @@ test: download
 [group('golang')]
 [group('test')]
 test-coverage: download
-    go  test -tags={{ go_test_tags }} ./... -json | gotestfmt
+    go test -tags={{ go_test_tags }} ./... -json | gotestfmt
 
 # Run tests for CI with atomic coverage and generate coverage reports
 [group('golang')]
