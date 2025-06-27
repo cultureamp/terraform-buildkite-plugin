@@ -19,7 +19,7 @@ jobs:
           cache-dependency-path: go.sum
 
       - name: Check Go Modules
-        run: make ensure-deps
+        run: just ensure-deps
 
   go-lint:
     runs-on: ubuntu-latest
