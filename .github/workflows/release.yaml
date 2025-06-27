@@ -20,8 +20,12 @@ jobs:
           cache: true
           cache-dependency-path: go.sum
 
+      - uses: extractions/setup-just@v3
+        with:
+          just-version: 1.40.0
+
       - name: Run tests
-        run: make test
+        run: just test
         working-directory: ./
 
       - name: Release Binaries
