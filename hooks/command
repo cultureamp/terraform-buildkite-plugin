@@ -1,10 +1,36 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
 set -euo pipefail
 
-dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+##
+# Entrypoint script for running the downloaded plugin binary.
+##
+
+# Constants
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+readonly SCRIPT_DIR
+readonly DOWNLOAD_SCRIPT="$SCRIPT_DIR/../scripts/buildkite/download.bash"
+readonly EXECUTABLE="terraform-buildkite-plugin"
+readonly REPO="https://github.com/cultureamp/terraform-buildkite-plugin"
+
+# Abort with message
+abort() {
+  local red
+  red=$(tput setaf 1 2>/dev/null || echo '')
+  local reset
+  reset=$(tput sgr0 2>/dev/null || echo '')
+  echo "[${red}FATAL${reset}] $1" >&2
+  exit 1
+}
+
+# Ensure the download script exists
+[[ -f "$DOWNLOAD_SCRIPT" ]] || abort "Cannot find download.bash at $DOWNLOAD_SCRIPT"
 
 # shellcheck source=../scripts/buildkite/download.bash
-source "$dir/../scripts/buildkite/download.bash"
+source "$DOWNLOAD_SCRIPT"
 
-download_binary_and_run "$@" || exit 1
+# Ensure the function is available
+declare -F download_binary_and_run >/dev/null || abort "Function download_binary_and_run is not defined."
+
+# Call and exec the plugin binary with args
+download_binary_and_run "$EXECUTABLE" "$REPO" "$@"

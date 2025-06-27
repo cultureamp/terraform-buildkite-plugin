@@ -8,11 +8,11 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/validators/opa"
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/testhelpers"
 	"github.com/rs/zerolog/log"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/xphir/terraform-buildkite-plugin/internal/adapters/validators/opa"
-	"github.com/xphir/terraform-buildkite-plugin/internal/testhelpers"
 )
 
 // TestEval_PolicyValidation tests the complete OPA policy evaluation workflow using real policy bundles.

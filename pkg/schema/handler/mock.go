@@ -1,8 +1,8 @@
 package handler
 
 import (
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/schema/schema"
 	"github.com/spf13/cobra"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/schema/schema"
 )
 
 // MockHandler is a test double for Handler.

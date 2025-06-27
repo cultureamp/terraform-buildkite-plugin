@@ -6,9 +6,9 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/validators/opa"
 	tfjson "github.com/hashicorp/terraform-json"
 	"github.com/rs/zerolog/log"
-	"github.com/xphir/terraform-buildkite-plugin/internal/adapters/validators/opa"
 )
 
 // OpaValidatorAdapter adapts the existing OPA PolicyValidator to implement

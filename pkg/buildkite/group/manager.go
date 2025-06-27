@@ -20,7 +20,7 @@
 // # Convenience Functions
 //
 // For convenience functions that use a global instance, see the
-// [github.com/xphir/terraform-buildkite-plugin/pkg/buildkite/group] subpackage.
+// [github.com/cultureamp/terraform-buildkite-plugin/pkg/buildkite/group] subpackage.
 //
 // # External Links
 //

@@ -9,11 +9,11 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/common"
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/plugin"
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/buildkite/group"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"github.com/xphir/terraform-buildkite-plugin/internal/common"
-	"github.com/xphir/terraform-buildkite-plugin/internal/plugin"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/buildkite/group"
 )
 
 // main is the entry point for the plugin.

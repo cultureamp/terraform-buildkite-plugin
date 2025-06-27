@@ -6,10 +6,10 @@
 package config
 
 import (
-	"github.com/xphir/terraform-buildkite-plugin/internal/adapters/outputs"
-	"github.com/xphir/terraform-buildkite-plugin/internal/adapters/terraform"
-	"github.com/xphir/terraform-buildkite-plugin/internal/adapters/validators"
-	"github.com/xphir/terraform-buildkite-plugin/internal/adapters/workingdir"
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/outputs"
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/terraform"
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/validators"
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/workingdir"
 )
 
 type Mode string

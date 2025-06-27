@@ -138,6 +138,14 @@ lint-cspell:
 lint-markdown:
     markdownlint .
 
+# Run shellcheck for linting bash/sh files
+[group('lint')]
+[group('tools')]
+lint-shellcheck:
+    #!/usr/bin/env bash
+    set -euxo pipefail
+    shellcheck **/*.bash
+
 # Run Buildkite plugin linting (requires Docker)
 [group('lint')]
 [group('tools')]

@@ -6,11 +6,11 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/schema/generator"
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/schema/handler"
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/schema/schema"
 	"github.com/spf13/cobra"
 	"github.com/stretchr/testify/require"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/schema/generator"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/schema/handler"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/schema/schema"
 )
 
 // mockSchemaConfig implements schema.SchemaConfig for testing.

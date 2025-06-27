@@ -7,7 +7,7 @@ description: |-
     With support for looping over multiple working directories,
     Open Policy Agent checks against plans &
     Buildkite annotations detailing the success or failure of the the operations.
-author: https://github.com/xphir
+author: https://github.com/cultureamp
 requirements:
     - buildkite-agent
     - terraform

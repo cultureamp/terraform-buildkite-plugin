@@ -4,12 +4,12 @@ import (
 	"encoding/json"
 	"testing"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/outputs"
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/validators"
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/workingdir"
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/config"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/xphir/terraform-buildkite-plugin/internal/adapters/outputs"
-	"github.com/xphir/terraform-buildkite-plugin/internal/adapters/validators"
-	"github.com/xphir/terraform-buildkite-plugin/internal/adapters/workingdir"
-	"github.com/xphir/terraform-buildkite-plugin/internal/config"
 )
 
 func TestPlugin_JSONMarshaling(t *testing.T) {

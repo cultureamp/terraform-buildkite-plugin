@@ -3,9 +3,9 @@ package handler
 import (
 	"fmt"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/schema/caller"
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/schema/schema"
 	"github.com/spf13/cobra"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/schema/caller"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/schema/schema"
 )
 
 type HandleOptions struct {

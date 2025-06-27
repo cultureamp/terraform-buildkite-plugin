@@ -5,10 +5,10 @@ import (
 	"os"
 	"testing"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/common"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/xphir/terraform-buildkite-plugin/internal/common"
 )
 
 func TestFetchEnv(t *testing.T) {

@@ -66,7 +66,7 @@ func testConfigurationHandling(t *testing.T, pluginBinary string) {
 		{
 			name: "valid_test_mode",
 			env: map[string]string{
-				"BUILDKITE_PLUGINS": `[{"github.com/xphir/terraform-buildkite-plugin#v0.0.1": {"mode": "plan"}}]`,
+				"BUILDKITE_PLUGINS": `[{"github.com/cultureamp/terraform-buildkite-plugin#v0.0.1": {"mode": "plan"}}]`,
 				"BUILDKITE_PLUGIN_TERRAFORM_BUILDKITE_PLUGIN_TEST_MODE": "true",
 			},
 			expectedExitCode: 10, // Allow exit code 10 for valid test mode
@@ -130,7 +130,7 @@ func testSingleDirectoryExecution(t *testing.T, pluginBinary string) {
 		workingDir := setupTerraformDir(t, "single")
 
 		env := buildTestEnv(map[string]string{
-			"BUILDKITE_PLUGINS": `[{"github.com/xphir/terraform-buildkite-plugin#v0.0.1": {"mode": "plan", "working": {"directory": "` + workingDir + `"}}}]`,
+			"BUILDKITE_PLUGINS": `[{"github.com/cultureamp/terraform-buildkite-plugin#v0.0.1": {"mode": "plan", "working": {"directory": "` + workingDir + `"}}}]`,
 		})
 
 		ctx, cancel := context.WithTimeout(t.Context(), 60*time.Second)
@@ -157,7 +157,7 @@ func testSingleDirectoryExecution(t *testing.T, pluginBinary string) {
 		workingDir := setupTerraformDir(t, "single")
 
 		env := buildTestEnv(map[string]string{
-			"BUILDKITE_PLUGINS": `[{"github.com/xphir/terraform-buildkite-plugin#v0.0.1": {"mode": "plan", "working": {"directory": "` + workingDir + `"}}}]`,
+			"BUILDKITE_PLUGINS": `[{"github.com/cultureamp/terraform-buildkite-plugin#v0.0.1": {"mode": "plan", "working": {"directory": "` + workingDir + `"}}}]`,
 		})
 
 		ctx, cancel := context.WithTimeout(t.Context(), 60*time.Second)
@@ -245,7 +245,7 @@ func setupMultipleDirectoryTest(_ *testing.T, testCase struct {
 	exactCount     int
 }, multipleTestDir string) []string {
 	envVars := map[string]string{
-		"BUILDKITE_PLUGINS": `[{"github.com/xphir/terraform-buildkite-plugin#v0.0.1": {"mode": "plan", "working": {"directories": {"parent_directory": "` + multipleTestDir + `", "name_regex": "` + testCase.nameRegex + `"}}}}]`,
+		"BUILDKITE_PLUGINS": `[{"github.com/cultureamp/terraform-buildkite-plugin#v0.0.1": {"mode": "plan", "working": {"directories": {"parent_directory": "` + multipleTestDir + `", "name_regex": "` + testCase.nameRegex + `"}}}}]`,
 		"BUILDKITE_PLUGIN_TERRAFORM_BUILDKITE_PLUGIN_TEST_MODE": "false", // Disable test mode so plugin actually runs
 		"TF_LOG": "DEBUG", // Enable terraform debugging
 	}

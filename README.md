@@ -43,7 +43,7 @@ Add the following lines to your `pipeline.yml`:
 steps:
   - label: ":terraform: Plan infrastructure"
     plugins:
-      - xphir/terraform#v0.0.1:
+      - cultureamp/terraform#v0.0.1:
           mode: plan
           working:
             directories:

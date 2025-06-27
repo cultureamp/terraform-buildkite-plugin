@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/schema/schema"
 	"github.com/stretchr/testify/require"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/schema/schema"
 )
 
 // UnmarshalableType simulates a type that fails YAML marshaling.

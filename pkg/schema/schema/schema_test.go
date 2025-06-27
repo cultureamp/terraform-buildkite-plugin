@@ -3,8 +3,8 @@ package schema_test
 import (
 	"testing"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/schema/schema"
 	"github.com/stretchr/testify/require"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/schema/schema"
 )
 
 type ValidConfig struct {

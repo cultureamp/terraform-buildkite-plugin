@@ -10,9 +10,9 @@ import (
 	"strings"
 
 	"github.com/caarlos0/env/v11"
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/workingdir"
 	"github.com/go-playground/validator/v10"
 	"github.com/rs/zerolog/log"
-	"github.com/xphir/terraform-buildkite-plugin/internal/adapters/workingdir"
 )
 
 // getPluginName extracts the repository name from a plugin reference string.

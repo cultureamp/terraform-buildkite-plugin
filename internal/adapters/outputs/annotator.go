@@ -6,8 +6,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/buildkite/agent"
 	tfjson "github.com/hashicorp/terraform-json"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/buildkite/agent"
 )
 
 type buildkiteAnnotatorConfig struct {

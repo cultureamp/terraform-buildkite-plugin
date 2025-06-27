@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/xphir/terraform-buildkite-plugin/internal/config"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/schema/generator"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/schema/schema"
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/config"
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/schema/generator"
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/schema/schema"
 )
 
 func main() {
@@ -22,7 +22,7 @@ Allowing you to perform operations such as plan & apply.
 With support for looping over multiple working directories,
 Open Policy Agent checks against plans &
 Buildkite annotations detailing the success or failure of the the operations.`,
-				Author:       "https://github.com/xphir",
+				Author:       "https://github.com/cultureamp",
 				Requirements: []string{"buildkite-agent", "terraform", "opa"},
 			},
 		),

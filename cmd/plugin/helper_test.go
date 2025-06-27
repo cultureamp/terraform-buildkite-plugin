@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/testhelpers"
 	"github.com/stretchr/testify/require"
-	"github.com/xphir/terraform-buildkite-plugin/internal/testhelpers"
 )
 
 // buildPlugin compiles the main.go file and returns the path to the binary.

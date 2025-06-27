@@ -27,7 +27,7 @@ go run ./tools/schema/ --help
 name: Terraform
 description: A Buildkite plugin for processing terraform plans & applies,
 with additional support for annotations & OPA checks against plans.
-author: https://github.com/xphir
+author: https://github.com/cultureamp
 requirements: []
 configuration:
   type: object

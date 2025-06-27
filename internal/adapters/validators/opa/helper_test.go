@@ -8,9 +8,9 @@ import (
 	"os"
 	"testing"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/buildkite/group"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/buildkite/group"
 )
 
 // TestMain configures the test environment before running tests.

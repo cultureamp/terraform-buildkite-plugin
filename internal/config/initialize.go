@@ -10,8 +10,8 @@ import (
 	"context"
 	"encoding/json"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/common"
 	"github.com/rs/zerolog/log"
-	"github.com/xphir/terraform-buildkite-plugin/internal/common"
 )
 
 // Config provides methods for loading and validating Buildkite plugin configurations.

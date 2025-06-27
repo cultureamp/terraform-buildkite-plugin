@@ -6,12 +6,12 @@ import (
 	"os/exec"
 	"path"
 
+	o "github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/outputs"
+	v "github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/validators"
+	c "github.com/cultureamp/terraform-buildkite-plugin/internal/config"
+	a "github.com/cultureamp/terraform-buildkite-plugin/pkg/buildkite/agent"
 	"github.com/hashicorp/terraform-exec/tfexec"
 	tfjson "github.com/hashicorp/terraform-json"
-	o "github.com/xphir/terraform-buildkite-plugin/internal/adapters/outputs"
-	v "github.com/xphir/terraform-buildkite-plugin/internal/adapters/validators"
-	c "github.com/xphir/terraform-buildkite-plugin/internal/config"
-	a "github.com/xphir/terraform-buildkite-plugin/pkg/buildkite/agent"
 )
 
 type WorkspaceResult struct {

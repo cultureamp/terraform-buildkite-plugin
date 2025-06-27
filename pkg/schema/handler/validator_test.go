@@ -3,9 +3,9 @@ package handler_test
 import (
 	"testing"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/schema/handler"
 	validator "github.com/go-playground/validator/v10"
 	"github.com/stretchr/testify/require"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/schema/handler"
 )
 
 func TestFileExtensionValidator(t *testing.T) {

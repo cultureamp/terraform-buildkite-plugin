@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/xphir/terraform-buildkite-plugin/pkg/buildkite/group"
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/buildkite/group"
 )
 
 func TestGroupInterface_Methods(t *testing.T) {

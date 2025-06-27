@@ -5,7 +5,7 @@ outputers
 rego
 tfexec
 tfstate
-xphir
+cultureamp
 gjson
 shoutysnakecase
 otiai

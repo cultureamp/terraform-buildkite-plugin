@@ -3,9 +3,9 @@ package config_test
 import (
 	"testing"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/buildkite/group"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/buildkite/group"
 )
 
 func TestMain(m *testing.M) {

@@ -6,11 +6,11 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/common"
+	i "github.com/cultureamp/terraform-buildkite-plugin/internal/plugin/initiator"
+	o "github.com/cultureamp/terraform-buildkite-plugin/internal/plugin/orchestrator"
+	a "github.com/cultureamp/terraform-buildkite-plugin/pkg/buildkite/agent"
 	"github.com/rs/zerolog/log"
-	"github.com/xphir/terraform-buildkite-plugin/internal/common"
-	i "github.com/xphir/terraform-buildkite-plugin/internal/plugin/initiator"
-	o "github.com/xphir/terraform-buildkite-plugin/internal/plugin/orchestrator"
-	a "github.com/xphir/terraform-buildkite-plugin/pkg/buildkite/agent"
 )
 
 type ExitStatus int

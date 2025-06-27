@@ -5,7 +5,7 @@
       "wait": true,
       "watch": []
     },
-    "github.com/xphir/terraform-buildkite-plugin#v0.0.1": {
+    "github.com/cultureamp/terraform-buildkite-plugin#v0.0.1": {
       "mode": "apply",
       "working": {
         "directories": {

@@ -1,4 +1,4 @@
-module github.com/xphir/terraform-buildkite-plugin
+module github.com/cultureamp/terraform-buildkite-plugin
 
 go 1.24.3
 

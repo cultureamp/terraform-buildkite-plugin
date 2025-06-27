@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/outputs"
+	"github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/validators"
+	c "github.com/cultureamp/terraform-buildkite-plugin/internal/config"
 	"github.com/rs/zerolog/log"
-	"github.com/xphir/terraform-buildkite-plugin/internal/adapters/outputs"
-	"github.com/xphir/terraform-buildkite-plugin/internal/adapters/validators"
-	c "github.com/xphir/terraform-buildkite-plugin/internal/config"
 )
 
 type ParsedPayload struct {

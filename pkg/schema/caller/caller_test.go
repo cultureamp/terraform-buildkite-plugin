@@ -5,8 +5,8 @@ import (
 	"runtime"
 	"testing"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/schema/caller"
 	"github.com/stretchr/testify/require"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/schema/caller"
 )
 
 func TestCaller_CallPath(t *testing.T) {

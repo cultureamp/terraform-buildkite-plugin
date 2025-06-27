@@ -3,9 +3,9 @@ package generator
 import (
 	"context"
 
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/schema/handler"
+	"github.com/cultureamp/terraform-buildkite-plugin/pkg/schema/schema"
 	"github.com/spf13/cobra"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/schema/handler"
-	"github.com/xphir/terraform-buildkite-plugin/pkg/schema/schema"
 )
 
 // Generator generates a plugin schema file.
