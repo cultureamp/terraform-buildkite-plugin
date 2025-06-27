@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -euo pipefail
+
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# shellcheck source=../scripts/buildkite/download.bash
+source "$dir/../scripts/buildkite/download.bash"
+
+download_binary_and_run "$@" || exit 1
