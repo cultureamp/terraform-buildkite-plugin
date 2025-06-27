@@ -13,6 +13,7 @@ jobs:
       markdown_any_changed: ${{ steps.changed-files.outputs.markdown_any_changed }}
       golang_any_changed: ${{ steps.changed-files.outputs.golang_any_changed }}
       action_any_changed: ${{ steps.changed-files.outputs.action_any_changed }}
+      cspell_any_changed: ${{ steps.changed-files.outputs.cspell_any_changed }}
 
     steps:
       - name: Checkout
@@ -40,6 +41,8 @@ jobs:
               - '.goreleaser.yaml'
             action:
               - '.github/**'
+            cspell:
+              - '*'
 
   markdown:
     needs: [find-changed-files]
@@ -47,6 +50,14 @@ jobs:
       github.ref == 'refs/heads/main' ||
       needs.find-changed-files.outputs.markdown_any_changed == 'true'
     uses: ./.github/workflows/markdown.yml
+    secrets: inherit
+
+  cspell:
+    needs: [find-changed-files]
+    if: |
+      github.ref == 'refs/heads/main' ||
+      needs.find-changed-files.outputs.cspell_any_changed == 'true'
+    uses: ./.github/workflows/cspell.yml
     secrets: inherit
 
   action:
