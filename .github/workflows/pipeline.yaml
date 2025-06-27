@@ -77,7 +77,7 @@ jobs:
     uses: ./.github/workflows/actionlint.yml
     secrets: inherit
 
-  shellcheck:
+  scripts:
     needs: [find-changed-files]
     if: |
       github.ref == 'refs/heads/main' ||
@@ -100,10 +100,11 @@ jobs:
       - golang
       - action
       - cspell
+      - scripts
     if: always()
     steps:
       - name: Decide whether the needed jobs succeeded or failed
         uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe # v1
         with:
-          allowed-skips: "markdown,golang,action,cspell"
+          allowed-skips: "markdown,golang,action,cspell,scripts"
           jobs: ${{ toJSON(needs) }}
