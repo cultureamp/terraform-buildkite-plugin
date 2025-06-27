@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: pipeline
 on: push
 
@@ -35,5 +36,5 @@ jobs:
       - name: Decide whether the needed jobs succeeded or failed
         uses: re-actors/alls-green@release/v1
         with:
-          allowed-skips:
+          allowed-skips: ""
           jobs: ${{ toJSON(needs) }}
