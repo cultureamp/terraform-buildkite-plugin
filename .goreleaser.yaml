@@ -1,0 +1,26 @@
+version: 2
+
+builds:
+  - main: ./cmd/plugin/main.go # Specify entry point
+    binary: terraform-buildkite-plugin
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+
+checksum:
+  name_template: "checksums.txt"
+
+archives:
+  - format: "binary"
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  use: github-native
