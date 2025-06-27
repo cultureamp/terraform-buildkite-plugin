@@ -1,100 +1,165 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
 # Download logic based on that used by https://github.com/monebag/monorepo-diff-buildkite-plugin
 # Used under the terms of that license.
 
+# log <level> <message> [exit_code]
+#
+# Prints a formatted message to stdout or stderr, styled by level.
+#
+# Arguments:
+#   <level>      One of: info, warn, error, fatal
+#   <message>    The log message to print
+#   [exit_code]  (fatal only) Optional exit code, defaults to 1
+log() {
+  local level="$1"
+  shift
+
+  local color reset
+  reset=$(tput sgr0 2>/dev/null || true)
+
+  case "$level" in
+  info)
+    color=$(tput setaf 6 2>/dev/null || true)
+    ;; # cyan
+  warn)
+    color=$(tput setaf 3 2>/dev/null || true)
+    ;; # yellow
+  error)
+    color=$(tput setaf 1 2>/dev/null || true)
+    ;; # red
+  fatal)
+    color=$(tput setaf 1 2>/dev/null || true)
+    local message="$1"
+    local code="${2:-1}"
+    printf '%s\n' "[${color}FATAL${reset}] $message" >&2
+    exit "$code"
+    ;;
+  *)
+    color=""
+    ;;
+  esac
+
+  printf '%s\n' "[${color}${level^^}${reset}] $*" >&2
+}
+
+# check_cmd <command>
+# Returns 0 if the given command exists in PATH, otherwise returns 1.
 check_cmd() {
-  command -v "$1" >/dev/null 2>&1
-  return $?
+  local cmd="$1"
+  command -v "$cmd" >/dev/null 2>&1
 }
 
-say() {
-  echo "$1"
-}
-
-err() {
-  local red
-  red=$(tput setaf 1 2>/dev/null || echo '')
-  local reset
-  reset=$(tput sgr0 2>/dev/null || echo '')
-  say "${red}ERROR${reset}: $1" >&2
-  exit 1
-}
-
-get_architecture() {
-  local _ostype
-  _ostype="$(uname -s | tr '[:upper:]' '[:lower:]')"
-  local _arch
-  _arch="$(uname -m)"
-  local _arm=("arm armhf aarch64 aarch64_be armv6l armv7l armv8l arm64e") # arm64
-  local _amd=("x86 x86pc i386 i686 i686-64 x64 x86_64 x86_64h athlon")    # amd64
-
-  if [[ "${_arm[*]}" =~ ${_arch} ]]; then
-    _arch="arm64"
-  elif [[ "${_amd[*]}" =~ ${_arch} ]]; then
-    _arch="amd64"
-  elif [[ "${_arch}" != "ppc64le" ]]; then
-    echo "ERROR: unsupported architecture \"${_arch}\"" >&2
-    exit 2
-  fi
-
-  echo "${_ostype}_${_arch}"
-}
-
+# need_cmd <command>
+# Exits fatally if the given command is not available in PATH.
+# Useful for pre-flight checks in scripts.
 need_cmd() {
-  if ! check_cmd "$1"; then
-    err "need '$1' (command not found)"
+  local cmd="$1"
+  if ! check_cmd "$cmd"; then
+    log fatal "need '$cmd' (command not found)"
   fi
 }
 
-# This wraps curl or wget.
-# Try curl first, if not installed, use wget instead.
-downloader() {
+# _parse_architecture <os> <arch>
+# Normalizes architecture string for known OS/arch combinations.
+# Outputs "<os>_<normalized_arch>" or exits fatally if unsupported.
+_parse_architecture() {
+  local -r ostype="$1"
+  local arch="$2"
+  case "$arch" in
+  arm64 | arm | armhf | aarch64 | aarch64_be | armv6l | armv7l | armv8l | arm64e)
+    arch="arm64"
+    ;;
+  amd64 | xx86 | x86pc | i386 | i686 | i686-64 | x64 | x86_64 | x86_64h | athlon)
+    arch="amd64"
+    ;;
+  *)
+    log fatal "unsupported architecture \"$arch\"" 2
+    ;;
+  esac
+
+  echo "${ostype}_${arch}"
+}
+
+# downloader <url> <output>
+# Downloads a file using curl or wget, preferring curl if available.
+# Also accepts --check to ensure a downloader is installed.
+_downloader() {
+  local -r url="$1"
+  local -r output="$2"
+
+  local download_client
   if check_cmd curl; then
-    _dld=curl
+    download_client=curl
   elif check_cmd wget; then
-    _dld=wget
+    download_client=wget
   else
-    _dld='curl or wget' # to be used in error message of need_cmd
+    download_client='curl or wget'
   fi
 
-  if [ "$1" = --check ]; then
-    need_cmd "$_dld"
-  elif [ "$_dld" = curl ]; then
-    curl -sSfL "$1" -o "$2"
-  elif [ "$_dld" = wget ]; then
-    wget "$1" -O "$2"
+  if [ "$url" = --check ]; then
+    need_cmd "$download_client"
+  elif [ "$download_client" = curl ]; then
+    curl -sSfL "$url" -o "$output"
+  elif [ "$download_client" = wget ]; then
+    wget "$url" -O "$output"
   else
-    err "Unknown downloader"
+    log fatal "Unknown downloader"
   fi
 }
 
-get_version() {
-  local _plugin=${BUILDKITE_PLUGINS:-""}
-  local _version
-  _version=$(echo "$_plugin" | sed -e 's/.*terraform-buildkite-plugin//' -e 's/\".*//')
-  echo "$_version"
+# get_version <plugin-name>
+# Extracts the version suffix for the given Buildkite plugin from BUILDKITE_PLUGINS.
+# Example:
+#   BUILDKITE_PLUGINS='{"cultureamp/terraform-buildkite-plugin#v1.2.3"}'
+#   get_version terraform-buildkite-plugin → v1.2.3
+_get_version() {
+  local plugin_name="$1"
+  local plugins="${BUILDKITE_PLUGINS:-}"
+  echo "$plugins" | sed -nE "s/.*${plugin_name}#(v?[0-9][^\" ]*).*/\1/p"
 }
 
+# _get_download_url <repo> <executable> <arch> <version>
+# Builds the download URL for the given repo, executable, architecture, and version.
+# If version is empty, returns the latest URL.
+_get_download_url() {
+  local repo="$1"
+  local executable="$2"
+  local arch="$3"
+  local version="$4"
+
+  if [[ -z "$version" ]]; then
+    echo "${repo}/releases/latest/download/${executable}_${arch}"
+  else
+    echo "${repo}/releases/download/${version#v}/${executable}_${arch}"
+  fi
+}
+
+# download_binary_and_run <executable> <repo> [-- binary args...]
+# Downloads the appropriate binary for the current system and executes it.
+# If a version is found in BUILDKITE_PLUGINS, it is used; otherwise, the latest release is downloaded.
+# Any extra arguments are passed directly to the binary.
 download_binary_and_run() {
-  architecture="$(get_architecture)" || return 1
-  local _arch="$architecture"
-  local _executable="terraform-buildkite-plugin"
-  local _repo="https://github.com/xphir/terraform-buildkite-plugin"
+  local -r executable="$1"
+  local -r repo="$2"
+  shift 2
 
-  version="$(get_version)" || return 1
-  local _version="$version"
+  local os arch architecture version url
 
-  if [ -z "${_version}" ]; then
-    _url=${_repo}/releases/latest/download/${_executable}_${_arch}
-  else
-    _url=${_repo}/releases/download/${_version:1}/${_executable}_${_arch}
+  os="$(uname -s | tr '[:upper:]' '[:lower:]')"
+  arch="$(uname -m)"
+  architecture="$(_parse_architecture "$os" "$arch")" || return 1
+
+  version="$(_get_version "$executable")" || return 1
+  url="$(_get_download_url "$repo" "$executable" "$architecture" "$version")"
+
+  log info "Downloading $url"
+  if ! _downloader "$url" "$executable"; then
+    log fatal "failed to download $url"
   fi
 
-  if ! downloader "$_url" "$_executable"; then
-    say "failed to download $_url"
-    exit 1
-  fi
-
-  chmod +x ${_executable}
-
-  ./${_executable}
+  chmod +x "$executable"
+  exec "./$executable" "$@"
 }

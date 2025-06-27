@@ -26,7 +26,7 @@ abort() {
 # Ensure the download script exists
 [[ -f "$DOWNLOAD_SCRIPT" ]] || abort "Cannot find download.bash at $DOWNLOAD_SCRIPT"
 
-# shellcheck source=../scripts/buildkite/download.bash
+# shellcheck source=SCRIPTDIR/../scripts/buildkite/download.bash
 source "$DOWNLOAD_SCRIPT"
 
 # Ensure the function is available
