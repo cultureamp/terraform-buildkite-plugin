@@ -14,8 +14,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Lint
-        run: docker compose run --rm lint
-
       - name: Test
-        run: docker compose run --rm script-tests
+        run: docker compose run --rm buildkite-plugin-lint
