@@ -28,7 +28,7 @@ jobs:
         env:
           GITHUB_REPO: ${{ github.repository }}
       - name: Get Release Version
-        run: echo "RELEASE_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+        run: echo "RELEASE_TAG=$(git describe --tags --abbrev=0)" >> "$GITHUB_ENV"
       - uses: peter-evans/create-pull-request@ba864ad40c29a20a464f75f942160a3213edfbd1 # v6.1.0
         with:
           add-paths: CHANGELOG.md
