@@ -11,9 +11,7 @@ on:
       - ".goreleaser.yml"
   push:
     branches:
-      # TODO: temp
-      # - main
-      - "**"
+      - main
     paths:
       - "**/**.go"
 
@@ -39,8 +37,5 @@ jobs:
         uses: go-semantic-release/action@2e9dc4247a6004f8377781bef4cb9dad273a741f # v1.24.1
         with:
           hooks: goreleaser
-          # TODO: temp
-          prerelease: true
-          dry: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
