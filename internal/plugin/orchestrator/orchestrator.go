@@ -3,15 +3,18 @@ package orchestrator
 import (
 	"context"
 	"fmt"
+	"os"
 	"os/exec"
 	"path"
+
+	"github.com/hashicorp/terraform-exec/tfexec"
+	tfjson "github.com/hashicorp/terraform-json"
+	"github.com/rs/zerolog/log"
 
 	o "github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/outputs"
 	v "github.com/cultureamp/terraform-buildkite-plugin/internal/adapters/validators"
 	c "github.com/cultureamp/terraform-buildkite-plugin/internal/config"
 	a "github.com/cultureamp/terraform-buildkite-plugin/pkg/buildkite/agent"
-	"github.com/hashicorp/terraform-exec/tfexec"
-	tfjson "github.com/hashicorp/terraform-json"
 )
 
 type WorkspaceResult struct {
@@ -75,10 +78,13 @@ func NewOrchestrator(
 		opt(defaults)
 	}
 	if defaults.tExecPath == "" {
+		log.Debug().Msg("terraform exec path not configured, attempting to find terraform in PATH")
 		p, err := exec.LookPath("terraform")
 		if err != nil {
+			log.Error().Err(err).Str("PATH", os.Getenv("PATH")).Msg("terraform binary not found in PATH")
 			return nil, fmt.Errorf("terraform binary not found in PATH: %w", err)
 		}
+		log.Debug().Str("terraform_path", p).Msg("found terraform binary in PATH")
 		defaults.tExecPath = p
 	}
 	return defaults, nil
@@ -140,6 +146,11 @@ func (o *orchestratorConfig) Apply(ctx context.Context, workingDir string) *Work
 		return result
 	}
 	if err := tf.Apply(ctx, tfexec.DirOrPlan(planFile)); err != nil {
+		log.Error().
+			Err(err).
+			Str("working_dir", workingDir).
+			Str("plan_file", planFile).
+			Msg("terraform apply failed")
 		return &WorkspaceResult{
 			Success:    false,
 			Stage:      "applying",
@@ -156,8 +167,17 @@ func (o *orchestratorConfig) Apply(ctx context.Context, workingDir string) *Work
 }
 
 func (o *orchestratorConfig) newTerraform(workingDir string) (*tfexec.Terraform, error) {
+	log.Debug().
+		Str("working_dir", workingDir).
+		Str("terraform_exec_path", o.tExecPath).
+		Msg("creating terraform executor")
 	tf, err := tfexec.NewTerraform(workingDir, o.tExecPath)
 	if err != nil {
+		log.Error().
+			Err(err).
+			Str("working_dir", workingDir).
+			Str("terraform_exec_path", o.tExecPath).
+			Msg("failed to create terraform executor")
 		return nil, fmt.Errorf("failed to create Terraform runner: %w", err)
 	}
 	return tf, nil
@@ -184,6 +204,11 @@ func (o *orchestratorConfig) initSteps(ctx context.Context, workingDir string) (
 		}
 	}
 	if err = tf.Init(ctx, initOpts...); err != nil {
+		log.Error().
+			Err(err).
+			Str("working_dir", workingDir).
+			Interface("init_options", initOpts).
+			Msg("terraform init failed")
 		return nil, &WorkspaceResult{
 			Success:    false,
 			Stage:      "initialization",
@@ -202,6 +227,11 @@ func (o *orchestratorConfig) planSteps(
 ) (*tfjson.Plan, *WorkspaceResult) {
 	hasChanges, err := tf.Plan(ctx, tfexec.Out(planFile))
 	if err != nil {
+		log.Error().
+			Err(err).
+			Str("working_dir", workingDir).
+			Str("plan_file", planFile).
+			Msg("terraform plan failed")
 		return nil, &WorkspaceResult{
 			Success:    false,
 			Stage:      "planning",
@@ -219,6 +249,11 @@ func (o *orchestratorConfig) planSteps(
 	}
 	plan, err := tf.ShowPlanFile(ctx, planFile)
 	if err != nil {
+		log.Error().
+			Err(err).
+			Str("working_dir", workingDir).
+			Str("plan_file", planFile).
+			Msg("failed to show terraform plan file")
 		return nil, &WorkspaceResult{
 			Success:    false,
 			Stage:      "showing plan",
@@ -238,6 +273,11 @@ func (o *orchestratorConfig) validateSteps(
 	for _, validator := range o.validators {
 		result, err := validator.Validate(ctx, plan)
 		if err != nil {
+			log.Error().
+				Err(err).
+				Str("working_dir", workingDir).
+				Str("validator", fmt.Sprintf("%T", validator)).
+				Msg("validation failed")
 			return &WorkspaceResult{
 				Success:    false,
 				Stage:      "validation",
