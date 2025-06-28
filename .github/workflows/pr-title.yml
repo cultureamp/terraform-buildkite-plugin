@@ -2,6 +2,7 @@
 ---
 # see: https://www.conventionalcommits.org
 name: semantic-pr-title
+run-name: semantic-pr-title ${{ github.sha }} by @${{ github.actor }}
 
 on:
   pull_request:

@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 name: pipeline
+run-name: pipeline ${{ github.sha }} by @${{ github.actor }}
 
 # https://github.com/tj-actions/changed-files#on-push-%EF%B8%8F
 # Using GitHub's API is not supported for push events in tj-actions/changed-files
