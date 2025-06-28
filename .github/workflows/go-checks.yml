@@ -77,19 +77,6 @@ jobs:
       - name: Run Tests
         run: |
           set -euo pipefail
-          echo "=== PATH in test step ==="
-          echo "$PATH"
-          echo ""
-          echo "=== Terraform available? ==="
-          which terraform || echo "terraform not found"
-          terraform version || echo "terraform version failed"
-          echo ""
-          echo "=== Testing Go's exec.LookPath ==="
-          echo 'package main; import ("fmt", "os/exec"); func main() { p, err := exec.LookPath("terraform"); if err != nil { fmt.Printf("Go exec.LookPath failed: %v\n", err) } else { fmt.Printf("Go found terraform at: %s\n", p) } }' > /tmp/test_terraform.go
-          go run /tmp/test_terraform.go
-          echo ""
-          # Ensure PATH is properly exported for subprocesses
-          export PATH="$PATH"
           go test -json -v -tags="e2e,integration" ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
 
       # Upload the original go test log as an artifact for later review.
