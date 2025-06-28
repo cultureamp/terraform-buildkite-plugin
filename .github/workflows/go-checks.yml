@@ -43,6 +43,7 @@ jobs:
         uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3.1.2
         with:
           terraform_version: ${{  env.TERRAFORM_VERSION }}
+          terraform_wrapper: false
 
       - name: Setup OPA
         uses: open-policy-agent/setup-opa@34a30e8a924d1b03ce2cf7abe97250bbb1f332b5 # v2.2.0
@@ -57,6 +58,7 @@ jobs:
           echo "=== Terraform ==="
           which terraform || echo "terraform not found in PATH"
           terraform version || echo "terraform version command failed"
+          terraform --help || echo "terraform help command failed"
           echo ""
           echo "=== OPA ==="
           which opa || echo "opa not found in PATH"
