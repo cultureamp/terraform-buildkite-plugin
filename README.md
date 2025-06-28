@@ -12,28 +12,10 @@ operations.
 
 This project follows the [Standard Go Project Layout](https://github.com/golang-standards/project-layout)
 
-## Development
+## Contributing
 
-This project uses CLI tools for linting and testing where possible, with Docker as a fallback for the buildkite plugin
-linter.
-
-### Available Commands
-
-Run `just` to see all available commands and their descriptions.
-
-### Tool Installation
-
-This project requires:
-
-- [devbox](https://github.com/jetpack-io/devbox) - for managing Go and all CLI tools
-- [direnv](https://direnv.net/) - for loading devbox and managing secrets (via `.envrc.private`)
-- [docker](https://www.docker.com/) - for the buildkite plugin linter
-
-Follow the [devbox quickstart guide](https://www.jetify.com/docs/devbox/quickstart/) to install devbox, then run:
-
-```bash
-direnv allow .
-```
+Interested in contributing? Please see our [Contributing Guide](./.github/CONTRIBUTING.md) for development setup,
+coding standards, and workflow information.
 
 ## Example
 
@@ -117,14 +99,3 @@ Terraform execution options:
 - `init_options` (object) - Options for terraform init command
   - `plugin_dir` (Required, string) - Directory containing Terraform plugins
   - `get_plugins` (Required, boolean) - Whether to automatically download plugins
-
-## Releasing
-
-> **Work in Progress**: Release process is still being refined.
-
-Push a version tag to trigger new release via [Github Actions workflow](./.github/workflows/release.yml).
-
-```bash
-git tag v0.1.0
-git push --tags
-```
