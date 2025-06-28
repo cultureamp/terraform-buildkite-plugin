@@ -78,7 +78,7 @@ jobs:
       #     name: code-coverage
       #     path: coverage.txt
 
-  schema-check:
+  fresh-check-schema:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
