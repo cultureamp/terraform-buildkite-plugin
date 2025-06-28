@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/streetsidesoftware/cspell/main/packages/cspell-types/cspell.schema.json
 ---
 # cSpell Settings - https://cspell.org/
 # version - currently always 0.2 - controls how the settings in the configuration file behave.
