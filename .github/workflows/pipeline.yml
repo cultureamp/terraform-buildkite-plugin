@@ -35,7 +35,7 @@ jobs:
           files_yaml: |
             markdown:
               - '**.md'
-              - 'markdownlint.yml
+              - 'markdownlint.yml'
             golang:
               - '**.go'
               - 'go.mod'
