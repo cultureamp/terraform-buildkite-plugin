@@ -40,6 +40,7 @@ jobs:
         with:
           hooks: goreleaser
           # TODO: temp
+          prerelease: true
           dry: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
