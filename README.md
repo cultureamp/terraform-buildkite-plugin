@@ -122,7 +122,7 @@ Terraform execution options:
 
 > **Work in Progress**: Release process is still being refined.
 
-Push a version tag to trigger new release via [Github Actions workflow](./.github/workflows/release.yaml).
+Push a version tag to trigger new release via [Github Actions workflow](./.github/workflows/release.yml).
 
 ```bash
 git tag v0.1.0
