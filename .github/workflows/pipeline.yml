@@ -41,7 +41,7 @@ jobs:
               - 'go.sum'
               - 'README.md'
               - '.golangci.yml'
-              - '.goreleaser.yaml'
+              - '.goreleaser.yml'
             action:
               - '.github/**'
             cspell:
