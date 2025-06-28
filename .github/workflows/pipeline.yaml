@@ -58,7 +58,7 @@ jobs:
     if: |
       github.ref == 'refs/heads/main' ||
       needs.find-changed-files.outputs.markdown_any_changed == 'true'
-    uses: ./.github/workflows/markdown.yml
+    uses: ./.github/workflows/pipelines/markdown.yml
     secrets: inherit
 
   cspell:
@@ -66,7 +66,7 @@ jobs:
     if: |
       github.ref == 'refs/heads/main' ||
       needs.find-changed-files.outputs.cspell_any_changed == 'true'
-    uses: ./.github/workflows/cspell.yml
+    uses: ./.github/workflows/pipelines/cspell.yml
     secrets: inherit
 
   action:
@@ -74,7 +74,7 @@ jobs:
     if: |
       github.ref == 'refs/heads/main' ||
       needs.find-changed-files.outputs.action_any_changed == 'true'
-    uses: ./.github/workflows/actionlint.yml
+    uses: ./.github/workflows/pipelines/actionlint.yml
     secrets: inherit
 
   scripts:
@@ -82,7 +82,7 @@ jobs:
     if: |
       github.ref == 'refs/heads/main' ||
       needs.find-changed-files.outputs.scripts_any_changed == 'true'
-    uses: ./.github/workflows/scripts.yml
+    uses: ./.github/workflows/pipelines/scripts.yml
     secrets: inherit
 
   golang:
@@ -90,7 +90,7 @@ jobs:
     if: |
       github.ref == 'refs/heads/main' ||
       needs.find-changed-files.outputs.golang_any_changed == 'true'
-    uses: ./.github/workflows/go-checks.yml
+    uses: ./.github/workflows/pipelines/go-checks.yml
     secrets: inherit
 
   pipeline-success:
