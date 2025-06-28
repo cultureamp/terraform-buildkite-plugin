@@ -8,7 +8,7 @@ on:
     types: [opened, edited, synchronize, reopened]
 
 jobs:
-  validate-pr-title:
+  validate-title:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
