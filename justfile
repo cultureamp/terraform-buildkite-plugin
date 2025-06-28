@@ -148,7 +148,7 @@ lint-cspell:
 [group('lint')]
 [group('tools')]
 lint-markdown:
-    markdownlint .
+    markdownlint-cli2
 
 # Run shellcheck for linting bash/sh files
 [group('lint')]
