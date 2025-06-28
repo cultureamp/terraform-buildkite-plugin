@@ -234,4 +234,4 @@ test-all: test test-scripts
 # Run all quality checks: format, vet, lint, test, and script tests (used in CI)
 [group('lint')]
 [group('test')]
-ci: fmt vet lint test-all
+ci: fmt vet lint test-all generate-schema
