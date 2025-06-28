@@ -6,6 +6,7 @@ env:
   TERRAFORM_VERSION: 1.11.4
   OPA_VERSION: 1.4.2
   GOLANGCI_LINT_VERSION: 2.1
+  GOTEST_FMT_VERSION: 2.5.0
 
 jobs:
   lint-go:
@@ -43,6 +44,7 @@ jobs:
         uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3.1.2
         with:
           terraform_version: ${{  env.TERRAFORM_VERSION }}
+          # this needs to be set as false otherwise the wrapper leads to issues with how its used in the plugin
           terraform_wrapper: false
 
       - name: Setup OPA
@@ -50,29 +52,10 @@ jobs:
         with:
           version: ${{ env.OPA_VERSION}}
 
-      - name: Debug tool installations
-        run: |
-          echo "=== PATH ==="
-          echo $PATH
-          echo ""
-          echo "=== Terraform ==="
-          which terraform || echo "terraform not found in PATH"
-          terraform version || echo "terraform version command failed"
-          terraform --help || echo "terraform help command failed"
-          echo ""
-          echo "=== OPA ==="
-          which opa || echo "opa not found in PATH"
-          opa version || echo "opa version command failed"
-          echo ""
-          echo "=== Available binaries in common locations ==="
-          find /usr/local/bin /usr/bin /opt -name "terraform" -o -name "opa" 2>/dev/null || echo "No terraform or opa found in common locations"
-
-      # Install gotestfmt on the VM running the action.
       - name: Set up gotestfmt
         uses: GoTestTools/gotestfmt-action@8b4478c7019be847373babde9300210e7de34bfb # v2.2.0
         with:
-          # Optional: pass the gotestfmt version you want to run.
-          version: v2.5.0
+          version: v${{ env.GOTEST_FMT_VERSION }}
 
       # Run tests with nice formatting. Save the original log in /tmp/gotest.log
       # This will run unit tests, integration tests, and e2e tests.
