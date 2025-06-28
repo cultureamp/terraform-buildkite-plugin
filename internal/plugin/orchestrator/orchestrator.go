@@ -207,7 +207,7 @@ func (o *orchestratorConfig) initSteps(ctx context.Context, workingDir string) (
 		log.Error().
 			Err(err).
 			Str("working_dir", workingDir).
-			Interface("terraform", tf).
+			Str("tfExecPath", tf.ExecPath()).
 			Interface("init_options", initOpts).
 			Msg("terraform init failed")
 		return nil, &WorkspaceResult{
