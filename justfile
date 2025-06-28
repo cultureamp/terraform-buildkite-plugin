@@ -1,3 +1,7 @@
+# flags
+
+set unstable := true
+
 # Configurable Variables
 
 architectures := "amd64 arm64"
@@ -10,6 +14,7 @@ go_test_tags := "integration,e2e"
 
 go_arch := shell("go env GOARCH")
 go_os := shell("go env GOOS")
+docker-check := 'command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1'
 
 # Static Variables (we dont intend people to change these)
 
@@ -21,6 +26,8 @@ plugin_name := "terraform-buildkite-plugin"
 entrypoint_dir := "./cmd/plugin"
 [private]
 sample_plugin_vars := shell("jq -c . test/plugin/buildkite-plugins-var.json | jq -R")
+
+# Helper Functions
 
 # Default and Help Commands
 [group('helper')]
@@ -37,6 +44,11 @@ show-vars:
     @echo "    go_arch: {{ BLUE }}{{ go_arch }}{{ NORMAL }}"
     @echo "    go_os: {{ BLUE }}{{ go_os }}{{ NORMAL }}"
     @echo "    go_test_tags: {{ BLUE }}{{ go_test_tags }}{{ NORMAL }}"
+
+# A helper function to print a warning when Docker is not available
+[private]
+docker-warning command:
+    @echo "{{ style("error") }}⚠️  Warning: Docker is not available or not running, so '{{ command }}' was skipped.{{ NORMAL }}"
 
 # Show all available recipes
 [group('helper')]
@@ -154,7 +166,7 @@ lint-github-actions:
 [group('lint')]
 [group('tools')]
 lint-buildkite-plugin:
-    docker compose run --rm buildkite-plugin-lint
+    @{{ docker-check }} && docker compose run --rm buildkite-plugin-lint || just docker-warning buildkite-plugin-lint
 
 # Run all linting commands (Go, spellcheck, markdown)
 [group('lint')]
