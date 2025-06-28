@@ -2,6 +2,11 @@
 name: go-checks
 on: workflow_call
 
+env:
+  TERRAFORM_VERSION: 1.11.4
+  OPA_VERSION: 1.4.2
+  GOLANGCI_LINT_VERSION: 2.1
+
 jobs:
   go-lint:
     runs-on: ubuntu-latest
@@ -14,7 +19,7 @@ jobs:
       - name: golangci-lint
         uses: golangci/golangci-lint-action@4afd733a84b1f43292c63897423277bb7f4313a9 # v8
         with:
-          version: v2.1
+          version: v${{ env.GOLANGCI_LINT_VERSION }}
 
   buildkite-plugin-lint:
     runs-on: ubuntu-latest
@@ -33,6 +38,21 @@ jobs:
         with:
           go-version-file: go.mod
           cache-dependency-path: go.sum
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3.1.2
+        with:
+          terraform_version: ${{  env.TERRAFORM_VERSION }}
+
+      - name: Setup OPA
+        uses: open-policy-agent/setup-opa@34a30e8a924d1b03ce2cf7abe97250bbb1f332b5 # v2.2.0
+        with:
+          version: ${{ env.OPA_VERSION}}
+
+      - name: Verify tool installations
+        run: |
+          terraform version
+          opa version
 
       # Install gotestfmt on the VM running the action.
       - name: Set up gotestfmt
