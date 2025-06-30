@@ -383,51 +383,51 @@
         }
       }
     },
-    "gotestfmt@2.5.0": {
-      "last_modified": "2025-05-16T20:19:48Z",
-      "resolved": "github:NixOS/nixpkgs/12a55407652e04dcf2309436eb06fef0d3713ef3#gotestfmt",
+    "gotestsum@1.12.3": {
+      "last_modified": "2025-06-20T02:24:11Z",
+      "resolved": "github:NixOS/nixpkgs/076e8c6678d8c54204abcb4b1b14c366835a58bb#gotestsum",
       "source": "devbox-search",
-      "version": "2.5.0",
+      "version": "1.12.3",
       "systems": {
         "aarch64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/w55d2z6m5cv8nh1izlxgf346p4x03zrw-gotestfmt-2.5.0",
+              "path": "/nix/store/pqm6djsmmkdxi7jm8pf7yz75wzyb5zls-gotestsum-1.12.3",
               "default": true
             }
           ],
-          "store_path": "/nix/store/w55d2z6m5cv8nh1izlxgf346p4x03zrw-gotestfmt-2.5.0"
+          "store_path": "/nix/store/pqm6djsmmkdxi7jm8pf7yz75wzyb5zls-gotestsum-1.12.3"
         },
         "aarch64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/h0n6p4glrd2f85chm2a4kk4iayafvj3a-gotestfmt-2.5.0",
+              "path": "/nix/store/8qwq3lkc672sdzxlkyjmd3wdnysnivdy-gotestsum-1.12.3",
               "default": true
             }
           ],
-          "store_path": "/nix/store/h0n6p4glrd2f85chm2a4kk4iayafvj3a-gotestfmt-2.5.0"
+          "store_path": "/nix/store/8qwq3lkc672sdzxlkyjmd3wdnysnivdy-gotestsum-1.12.3"
         },
         "x86_64-darwin": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/yk0vq3g80bdf6gnga777hyz6im5cs5pq-gotestfmt-2.5.0",
+              "path": "/nix/store/dvb1nz35abv2syqvyhymj7rk4xww9i5q-gotestsum-1.12.3",
               "default": true
             }
           ],
-          "store_path": "/nix/store/yk0vq3g80bdf6gnga777hyz6im5cs5pq-gotestfmt-2.5.0"
+          "store_path": "/nix/store/dvb1nz35abv2syqvyhymj7rk4xww9i5q-gotestsum-1.12.3"
         },
         "x86_64-linux": {
           "outputs": [
             {
               "name": "out",
-              "path": "/nix/store/4s1w9n765ydlxmzlahb6ns09s4jzissc-gotestfmt-2.5.0",
+              "path": "/nix/store/m0k0d8bn5qv09wb4fgz7783hm2nw5daq-gotestsum-1.12.3",
               "default": true
             }
           ],
-          "store_path": "/nix/store/4s1w9n765ydlxmzlahb6ns09s4jzissc-gotestfmt-2.5.0"
+          "store_path": "/nix/store/m0k0d8bn5qv09wb4fgz7783hm2nw5daq-gotestsum-1.12.3"
         }
       }
     },

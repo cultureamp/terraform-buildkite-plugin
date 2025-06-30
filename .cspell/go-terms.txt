@@ -3,7 +3,6 @@ goos
 goarch
 golangci
 goimports
-gotestfmt
 golines
 ldflags
 groupf
