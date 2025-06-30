@@ -1,8 +1,11 @@
-# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/goreleaser/goreleaser/refs/tags/v2.3.2/www/docs/static/schema.json
 #
 # Visit https://goreleaser.com for documentation on how to customize this behavior.
 version: 2
 
+before:
+  hooks:
+    - goreleaser check
 builds:
   - id: main
     main: ./cmd/plugin
@@ -25,9 +28,8 @@ builds:
     binary: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
 archives:
   - id: no-archive
-    ids:
+    builds:
       - main
-    formats:
-      - binary
+    format: binary
 changelog:
   disable: true
