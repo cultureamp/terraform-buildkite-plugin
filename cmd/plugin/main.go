@@ -16,6 +16,18 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+//nolint:gochecknoglobals // Variables set at build time to provide plugin metadata.
+var (
+	// Version of plugin - set at build time.
+	version = "dev"
+	// name of the plugin - set at build time.
+	name = "terraform-buildkite-plugin"
+	// Commit hash of the plugin - set at build time.
+	commit = "unknown"
+	// date of the plugin - set at build time.
+	date = "unknown"
+)
+
 // main is the entry point for the plugin.
 //
 // It sets up logging, loads configuration, handles test mode, and runs the plugin.
@@ -23,18 +35,18 @@ func main() {
 	ctx := context.Background()
 
 	pluginContext := &plugin.Context{
-		// Name is the identifier used to locate this plugin's configuration
-		// within the BUILDKITE_PLUGINS environment variable.
-		Name: "terraform-buildkite-plugin",
-		// Version indicates the current version of the plugin.
-		// This is used for logging and diagnostic purposes.
-		Version: "0.0.1",
+		Name:    name,
+		Version: version,
+		Date:    date,
+		Commit:  commit,
 	}
 
 	// Configure the logger for console output with CI-friendly formatting.
 	configureLogger(ctx)
 
 	group.ClosedF("running %s version %s", pluginContext.Name, pluginContext.Version)
+
+	log.Debug().Str("commit", pluginContext.Commit).Str("date", pluginContext.Date).Msg("Plugin metadata")
 
 	handler := plugin.NewHandler()
 

@@ -49,6 +49,8 @@ func (e ExitStatus) ToInt() int {
 type Context struct {
 	Name    string // Name of the plugin
 	Version string // Version of the plugin
+	Date    string // Date of the plugin
+	Commit  string // Commit hash of the plugin
 }
 
 type Handler interface {
