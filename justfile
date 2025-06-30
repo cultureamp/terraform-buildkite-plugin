@@ -77,18 +77,14 @@ ensure-deps: download tidy
 
 # Build for a specific OS/arch (internal helper)
 [group('golang')]
-_build target_os=go_os target_arch=go_arch:
+build target_os=go_os target_arch=go_arch: tidy
     GOARCH={{ target_arch }} \
     GOOS={{ target_os }} \
     goreleaser build \
     --snapshot \
     --clean \
     --single-target \
-    --output {{ output_bin_base }}_{{ target_os }}_{{ target_arch }}
-
-# Build for the current architecture
-[group('golang')]
-build: download _build
+    --output {{ output_bin_base }}
 
 # Build and release the plugin using goreleaser
 [group('golang')]
@@ -99,17 +95,13 @@ release: tidy
 
 # Build and run for a specific OS/arch (internal helper)
 [group('golang')]
-_run target_os=go_os target_arch=go_arch valid_exit_code=valid_exit_code: (_build target_os target_arch)
-    ./{{ output_bin_base }}_{{ target_os }}_{{ target_arch }} || [ "$?" -eq {{ valid_exit_code }} ]
-
-# Run the plugin binary
-[group('golang')]
-run: _run
+run target_os=go_os target_arch=go_arch valid_exit_code=valid_exit_code: (build target_os target_arch)
+    ./{{ output_bin_base }} || [ "$?" -eq {{ valid_exit_code }} ]
 
 # Run the plugin in test mode with sample configuration
 [group('golang')]
-run-test-entry:
-    @BUILDKITE_PLUGINS={{ sample_plugin_vars }} \
+run-test-mode:
+    BUILDKITE_PLUGINS={{ sample_plugin_vars }} \
     BUILDKITE_PLUGIN_{{ shoutysnakecase(plugin_name) }}_TEST_MODE=true \
     just valid_exit_code=10 run
 
