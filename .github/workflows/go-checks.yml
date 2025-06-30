@@ -71,7 +71,7 @@ jobs:
       # Run tests with nice formatting and generate JUnit XML for reporting
       # This will run unit tests, integration tests, and e2e tests.
       - name: Run Tests
-        run: gotest.tools/gotestsum --junitfile test-results.xml --format github-actions -- -v -tags="e2e,integration" ./...
+        run: gotestsum --junitfile test-results.xml --format github-actions -- -v -tags="e2e,integration" -coverprofile=coverage.out -covermode=atomic ./...
 
       # Generate test report annotations in GitHub UI
       - name: Test Report
@@ -82,6 +82,15 @@ jobs:
           check_name: Go Test Results
           fail_on_failure: true
           require_tests: true
+
+      # Upload coverage to Codecov
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5.4.3
+        with:
+          file: coverage.out
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
 
   fresh-check-schema:
     runs-on: ubuntu-latest
