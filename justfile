@@ -4,9 +4,6 @@ set unstable := true
 
 # Configurable Variables
 
-architectures := "amd64 arm64"
-unsupported_builds := ""
-platforms := "linux darwin"
 output_dir := "bin"
 go_test_tags := "integration,e2e"
 
@@ -38,9 +35,6 @@ default: help
 show-vars:
     @echo "Current Variables:"
     @echo "    plugin_name: {{ BLUE }}{{ plugin_name }}{{ NORMAL }}"
-    @echo "    architectures: {{ BLUE }}{{ architectures }}{{ NORMAL }}"
-    @echo "    platforms: {{ BLUE }}{{ platforms }}{{ NORMAL }}"
-    @echo "    output_dir: {{ BLUE }}{{ output_dir }}{{ NORMAL }}"
     @echo "    go_arch: {{ BLUE }}{{ go_arch }}{{ NORMAL }}"
     @echo "    go_os: {{ BLUE }}{{ go_os }}{{ NORMAL }}"
     @echo "    go_test_tags: {{ BLUE }}{{ go_test_tags }}{{ NORMAL }}"
@@ -96,22 +90,7 @@ _build target_os=go_os target_arch=go_arch:
 [group('golang')]
 build: download _build
 
-# Build binaries for all supported OS/arch combinations
-[group('golang')]
-build-all: download
-    for platform in {{ platforms }}; do \
-        for arch in {{ architectures }}; do \
-            combo="$$platform/$$arch"; \
-            if ! printf "%s\n" {{ unsupported_builds }} | grep -q "^$$combo$$"; then \
-                echo "Building for $$combo"; \
-                just _build "$$platform" "$$arch"; \
-            else \
-                echo "Skipping unsupported combo: $$combo"; \
-            fi; \
-        done; \
-    done
-
-# Build and release the plugin using Goreleaser
+# Build and release the plugin using goreleaser
 [group('golang')]
 release: tidy
     goreleaser release --snapshot --clean --draft
