@@ -51,6 +51,10 @@ help:
     @echo ""
     @just show-vars
 
+[private]
+create-bin-dir:
+    @mkdir -p {{ output_dir }}
+
 # Dependency Management
 
 # Download Go module dependencies
@@ -77,7 +81,7 @@ ensure-deps: download tidy
 
 # Build for a specific OS/arch (internal helper)
 [group('golang')]
-build target_os=go_os target_arch=go_arch: tidy
+build target_os=go_os target_arch=go_arch: create-bin-dir tidy
     GOARCH={{ target_arch }} \
     GOOS={{ target_os }} \
     goreleaser build \
