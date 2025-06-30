@@ -12,3 +12,4 @@ closedf
 setaf
 covermode
 coverprofile
+goreleaser
