@@ -1,15 +1,12 @@
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
-
-# Visit https://goreleaser.com for documentation on how to customize this
-# behavior.
+#
+# Visit https://goreleaser.com for documentation on how to customize this behavior.
 version: 2
 
-before:
-  hooks:
-    # this is just an example and not a requirement for provider building/publishing
-    - go mod tidy
 builds:
-  - env:
+  - id: main
+    main: ./cmd/plugin
+    env:
       # goreleaser does not work with CGO, it could also complicate usage by users in CI/CD systems where they are
       # unable to install libraries.
       - CGO_ENABLED=0
@@ -17,7 +14,7 @@ builds:
     flags:
       - -trimpath
     ldflags:
-      - "-s -w -X main.version={{.Version}} -X main.commit={{.Commit}}"
+      - '-s -w -extldflags "-static" -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.name={{.ProjectName}}'
     goos:
       - linux
       - darwin
@@ -25,24 +22,10 @@ builds:
       - amd64
       - arm64
     ignore: []
-    binary: "{{ .ProjectName }}_v{{ .Version }}"
+    binary: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
 archives:
-  - formats:
-      - zip
-    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
-signs:
-  - artifacts: checksum
-    args:
-      # if you are using this in a GitHub action or some other automated pipeline, you
-      # need to pass the batch flag to indicate its not interactive.
-      - "--batch"
-      - "--local-user"
-      - "--output"
-      - "${signature}"
-      - "--detach-sign"
-      - "${artifact}"
-release:
-  # If you want to manually examine the release before its live, uncomment this line:
-  draft: true
-changelog:
-  disable: true
+  - id: no-archive
+    ids:
+      - main
+    formats:
+      - binary
