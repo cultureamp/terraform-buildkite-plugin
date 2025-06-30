@@ -68,16 +68,12 @@ jobs:
         with:
           version: ${{ env.OPA_VERSION}}
 
-      - name: debug
-        run: |
-          echo "Go tools: $(go tool)"
-
       # Run tests with nice formatting and generate JUnit XML for reporting
       # This will run unit tests, integration tests, and e2e tests.
       - name: Run Tests
         run: |
           set -euo pipefail
-          go tool gotest.tools/gotestsum --junitfile test-results.xml --format github-actions -- -v -tags="e2e,integration" ./...
+          gotest.tools/gotestsum --junitfile test-results.xml --format github-actions -- -v -tags="e2e,integration" ./...
 
       # Generate test report annotations in GitHub UI
       - name: Test Report
