@@ -6,7 +6,7 @@ run-name: generate-changelog ${{ github.sha }} by @${{ github.actor }}
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: [Release]
+    workflows: [release]
     types: [completed]
     branches: [main]
 
