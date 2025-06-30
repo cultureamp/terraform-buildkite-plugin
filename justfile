@@ -182,12 +182,12 @@ vet: download
 test: download
     gotestsum --format pkgname --format-icons default -- -tags={{ go_test_tags }} ./...
 
-# Run tests with atomic coverage and generate coverage reports using gotestsum
+# Run tests with atomic coverage and generate coverage reports using gotestsum and then open the report in a browser
 [group('golang')]
 [group('test')]
 test-coverage: create-coverage-dir download
-    gotestsum --format pkgname --format-icons default -- -tags=integration -coverprofile={{ coverage_dir }}/c.out ./...
-    go tool cover -html={{ coverage_dir }}//c.out -o {{ coverage_dir }}/report.html
+    gotestsum --format pkgname --format-icons default -- -tags=integration -race -covermode=atomic -coverprofile={{ coverage_dir }}/c.out ./...
+    go tool cover -html={{ coverage_dir }}/c.out -o {{ coverage_dir }}/report.html
     open {{ coverage_dir }}/report.html
 
 # Run BATS script tests using CLI (primary method)
