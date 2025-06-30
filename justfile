@@ -176,10 +176,16 @@ vet: download
 
 # Testing
 
-# Run tests with race detector and coverage using gotestsum
+# Run unit tests
 [group('golang')]
 [group('test')]
-test: download
+test-unit: download
+    gotestsum --format pkgname --format-icons default -- ./...
+
+# Run unit tests, integration tests and e2e tests
+[group('golang')]
+[group('test')]
+test-full: download
     gotestsum --format pkgname --format-icons default -- -tags={{ go_test_tags }} ./...
 
 # Run tests with atomic coverage and generate coverage reports using gotestsum and then open the report in a browser
@@ -196,6 +202,10 @@ test-coverage: create-coverage-dir download
 test-scripts:
     bats test/scripts
 
+# Run all tests (Go tests, script tests, and plugin lint)
+[group('test')]
+test: test-full test-scripts
+
 # Utilities
 
 # Generate JSON schema (for config validation, etc.)
@@ -209,11 +219,7 @@ generate-schema:
 clean:
     rm -rf bin artifacts
 
-# Run all tests (Go tests, script tests, and plugin lint)
-[group('test')]
-test-all: test test-scripts
-
 # Run all quality checks: format, vet, lint, test, and script tests (used in CI)
 [group('lint')]
 [group('test')]
-ci: fmt vet lint test-all generate-schema
+ci: fmt vet lint test generate-schema
