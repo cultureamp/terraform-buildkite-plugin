@@ -73,26 +73,22 @@ jobs:
         with:
           version: v${{ env.GOTEST_FMT_VERSION }}
 
-      # Run tests with nice formatting. Save the original log in /tmp/gotest.log
+      # Run tests with nice formatting and generate JUnit XML for reporting
       # This will run unit tests, integration tests, and e2e tests.
       - name: Run Tests
         run: |
           set -euo pipefail
-          go test -json -v -tags="e2e,integration" ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
+          gotestsum --junitfile test-results.xml --format github-actions -- -v -tags="e2e,integration" ./...
 
-      # Upload the original go test log as an artifact for later review.
-      # - name: Upload test log
-      #   uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-      #   with:
-      #     name: test-log
-      #     path: /tmp/gotest.log
-      #     if-no-files-found: error
-
-      # - name: Archive code coverage results
-      #   uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
-      #   with:
-      #     name: code-coverage
-      #     path: coverage.txt
+      # Generate test report annotations in GitHub UI
+      - name: Test Report
+        uses: mikepenz/action-junit-report@a83fd2b5d58d4fc702e690c1ea688d702d28d281 # v5.6.1
+        if: ${{ !cancelled() }} # run this step even if previous step failed
+        with:
+          report_paths: test-results.xml
+          check_name: Go Test Results
+          fail_on_failure: true
+          require_tests: true
 
   fresh-check-schema:
     runs-on: ubuntu-latest
