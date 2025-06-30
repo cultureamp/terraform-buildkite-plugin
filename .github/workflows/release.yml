@@ -8,12 +8,6 @@ on:
   workflow_call:
   # when manually triggered
   workflow_dispatch:
-  # on pushes to main branch
-  push:
-    branches:
-      - main
-    paths:
-      - "**/**.go"
 
 jobs:
   release:
