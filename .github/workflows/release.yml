@@ -4,11 +4,11 @@ name: release
 run-name: release ${{ github.sha }} by @${{ github.actor }}
 
 on:
+  # when triggered by pipeline.yml
+  workflow_call:
+  # when manually triggered
   workflow_dispatch:
-  pull_request:
-    paths:
-      - ".github/workflows/release.yml"
-      - ".goreleaser.yml"
+  # on pushes to main branch
   push:
     branches:
       - main
