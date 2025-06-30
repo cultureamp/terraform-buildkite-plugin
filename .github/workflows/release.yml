@@ -32,10 +32,9 @@ jobs:
           go-version-file: "go.mod"
           cache: true
       - name: Run go-semantic-release
-        # TODO: temp
-        #if: ${{ github.ref_name == 'main' }}
         uses: go-semantic-release/action@2e9dc4247a6004f8377781bef4cb9dad273a741f # v1.24.1
         with:
           hooks: goreleaser
+          prerelease: ${{ github.ref_name == 'main' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
