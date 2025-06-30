@@ -83,15 +83,6 @@ jobs:
           fail_on_failure: true
           require_tests: true
 
-      # Upload coverage to Codecov
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5.4.3
-        with:
-          file: coverage.out
-          flags: unittests
-          name: codecov-umbrella
-          fail_ci_if_error: false
-
   fresh-check-schema:
     runs-on: ubuntu-latest
     steps:
