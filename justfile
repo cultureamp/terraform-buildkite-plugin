@@ -23,6 +23,8 @@ plugin_name := "terraform-buildkite-plugin"
 sample_plugin_vars := shell("jq -c . test/plugin/buildkite-plugins-var.json | jq -R")
 [private]
 output_bin_base := output_dir + "/" + plugin_name
+[private]
+coverage_dir := "coverage"
 
 # Helper Functions
 
@@ -51,9 +53,15 @@ help:
     @echo ""
     @just show-vars
 
+# Create the output directory for build artifacts
 [private]
 create-bin-dir:
     @mkdir -p {{ output_dir }}
+
+# Create the artifacts directory for test outputs
+[private]
+create-coverage-dir:
+    @mkdir -p {{ coverage_dir }}
 
 # Dependency Management
 
@@ -168,31 +176,35 @@ vet: download
 
 # Testing
 
-# Run tests with race detector and coverage
+# Run unit tests
 [group('golang')]
 [group('test')]
-test: download
-    go test -tags={{ go_test_tags }} -race -cover ./...
+test-unit: download
+    gotestsum --format pkgname --format-icons default -- ./...
 
-# Run tests and output coverage in JSON format (requires gotestfmt)
+# Run unit tests, integration tests and e2e tests
 [group('golang')]
 [group('test')]
-test-coverage: download
-    go test -tags={{ go_test_tags }} ./... -json | gotestfmt
+test-full: download
+    gotestsum --format pkgname --format-icons default -- -tags={{ go_test_tags }} ./...
 
-# Run tests for CI with atomic coverage and generate coverage reports
+# Run tests with atomic coverage and generate coverage reports using gotestsum and then open the report in a browser
 [group('golang')]
 [group('test')]
-test-ci: download
-    mkdir artifacts
-    go test -tags={{ go_test_tags }} ./... -covermode=atomic -coverprofile=artifacts/count.out
-    go tool cover -func=artifacts/count.out | tee artifacts/coverage.out
+test-coverage: create-coverage-dir download
+    gotestsum --format pkgname --format-icons default -- -tags=integration -race -covermode=atomic -coverprofile={{ coverage_dir }}/c.out ./...
+    go tool cover -html={{ coverage_dir }}/c.out -o {{ coverage_dir }}/report.html
+    open {{ coverage_dir }}/report.html
 
 # Run BATS script tests using CLI (primary method)
 [group('bash')]
 [group('test')]
 test-scripts:
     bats test/scripts
+
+# Run all tests (Go tests, script tests, and plugin lint)
+[group('test')]
+test: test-full test-scripts
 
 # Utilities
 
@@ -207,11 +219,7 @@ generate-schema:
 clean:
     rm -rf bin artifacts
 
-# Run all tests (Go tests, script tests, and plugin lint)
-[group('test')]
-test-all: test test-scripts
-
 # Run all quality checks: format, vet, lint, test, and script tests (used in CI)
 [group('lint')]
 [group('test')]
-ci: fmt vet lint test-all generate-schema
+ci: fmt vet lint test generate-schema

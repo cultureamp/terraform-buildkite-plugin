@@ -6,6 +6,9 @@ version: "0.2"
 # language - this specifies the language locale to use in choosing the general dictionary. For example: "language": "en-GB" tells cspell to use British English instead of US English.
 language: en-AU,en-GB
 
+# Tells the spell checker to load .gitignore files and skip files that match the globs in the .gitignore files found.
+useGitignore: true
+
 # words - list of words to be always considered correct
 words: []
 

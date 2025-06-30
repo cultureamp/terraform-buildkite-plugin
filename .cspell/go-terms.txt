@@ -3,7 +3,6 @@ goos
 goarch
 golangci
 goimports
-gotestfmt
 golines
 ldflags
 groupf
@@ -13,3 +12,4 @@ setaf
 covermode
 coverprofile
 goreleaser
+gotestsum
