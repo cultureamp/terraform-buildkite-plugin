@@ -29,3 +29,5 @@ archives:
       - main
     formats:
       - binary
+changelog:
+  disable: true
