@@ -81,6 +81,7 @@ jobs:
           report_paths: test-results.xml
           check_name: Go Test Results
           include_passed: true
+          detailed_summary: true
           fail_on_failure: true
           require_tests: true
 
