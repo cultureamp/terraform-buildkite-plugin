@@ -68,10 +68,9 @@ jobs:
         with:
           version: ${{ env.OPA_VERSION}}
 
-      - name: Set up gotestfmt
-        uses: GoTestTools/gotestfmt-action@8b4478c7019be847373babde9300210e7de34bfb # v2.2.0
-        with:
-          version: v${{ env.GOTEST_FMT_VERSION }}
+      - name: debug
+        run: |
+          echo "Go tools: $(go tool)"
 
       # Run tests with nice formatting and generate JUnit XML for reporting
       # This will run unit tests, integration tests, and e2e tests.
