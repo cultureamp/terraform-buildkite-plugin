@@ -12,3 +12,4 @@ setaf
 covermode
 coverprofile
 goreleaser
+gotestsum
