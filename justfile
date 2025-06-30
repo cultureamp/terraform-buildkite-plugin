@@ -20,9 +20,9 @@ valid_exit_code := "0"
 [private]
 plugin_name := "terraform-buildkite-plugin"
 [private]
-entrypoint_dir := "./cmd/plugin"
-[private]
 sample_plugin_vars := shell("jq -c . test/plugin/buildkite-plugins-var.json | jq -R")
+[private]
+output_bin_base := output_dir + "/" + plugin_name
 
 # Helper Functions
 
@@ -78,13 +78,13 @@ ensure-deps: download tidy
 # Build for a specific OS/arch (internal helper)
 [group('golang')]
 _build target_os=go_os target_arch=go_arch:
-    @CGO_ENABLED=0 \
     GOARCH={{ target_arch }} \
     GOOS={{ target_os }} \
-    go build \
-    -ldflags="-w -s -extldflags \"-static\"" \
-    -o {{ output_dir }}/{{ plugin_name }}_{{ target_os }}_{{ target_arch }} \
-    {{ entrypoint_dir }}
+    goreleaser build \
+    --snapshot \
+    --clean \
+    --single-target \
+    --output {{ output_bin_base }}_{{ target_os }}_{{ target_arch }}
 
 # Build for the current architecture
 [group('golang')]
@@ -100,7 +100,7 @@ release: tidy
 # Build and run for a specific OS/arch (internal helper)
 [group('golang')]
 _run target_os=go_os target_arch=go_arch valid_exit_code=valid_exit_code: (_build target_os target_arch)
-    ./{{ output_dir }}/{{ plugin_name }}_{{ target_os }}_{{ target_arch }} || [ "$?" -eq {{ valid_exit_code }} ]
+    ./{{ output_bin_base }}_{{ target_os }}_{{ target_arch }} || [ "$?" -eq {{ valid_exit_code }} ]
 
 # Run the plugin binary
 [group('golang')]
