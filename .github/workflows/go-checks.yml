@@ -71,9 +71,7 @@ jobs:
       # Run tests with nice formatting and generate JUnit XML for reporting
       # This will run unit tests, integration tests, and e2e tests.
       - name: Run Tests
-        run: |
-          set -euo pipefail
-          gotest.tools/gotestsum --junitfile test-results.xml --format github-actions -- -v -tags="e2e,integration" ./...
+        run: gotest.tools/gotestsum --junitfile test-results.xml --format github-actions -- -v -tags="e2e,integration" ./...
 
       # Generate test report annotations in GitHub UI
       - name: Test Report
