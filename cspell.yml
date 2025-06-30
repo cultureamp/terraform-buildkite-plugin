@@ -1,0 +1,85 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/streetsidesoftware/cspell/main/packages/cspell-types/cspell.schema.json
+---
+# cSpell Settings - https://cspell.org/
+# version - currently always 0.2 - controls how the settings in the configuration file behave.
+version: "0.2"
+# language - this specifies the language locale to use in choosing the general dictionary. For example: "language": "en-GB" tells cspell to use British English instead of US English.
+language: en-AU,en-GB
+
+# words - list of words to be always considered correct
+words: []
+
+# flagWords - list of words to be always considered incorrect
+flagWords: []
+
+# ignoreWords - a list of words to be ignored (even if they are in the flagWords).
+ignoreWords: []
+
+# ignorePaths - a list of globs to specify which files are to be ignored.
+ignorePaths:
+  - go.mod
+  - go.sum
+  - LICENSE
+  - .golangci.yml
+
+# defaults to 100 per file.
+maxNumberOfProblems: 100
+
+# minWordLength - defaults to 4 - the minimum length of a word before it is checked.
+minWordLength: 4
+
+# allowCompoundWords - defaults to false; set to true to allow compound words by default.
+allowCompoundWords: false
+
+# dictionaries - list of the names of the dictionaries to use. See Dictionaries - https://cspell.org/docs/dictionaries/
+dictionaries:
+  - companies
+  - cities
+  - softwareTerms
+  - misc
+  - go
+  - cpp
+  - cpp-refined
+  - bash
+  - filetypes
+  - names
+  - domain-terms
+  - go-terms
+  - other-terms
+
+# this list defines any custom dictionaries to use. This is how you can include other languages like Spanish.
+dictionaryDefinitions:
+  - name: domain-terms
+    path: .cspell/domain-terms.txt
+  - name: go-terms
+    path: .cspell/go-terms.txt
+  - name: other-terms
+    path: .cspell/other-terms.txt
+
+# ignoreRegExpList - list of patterns to be ignored
+ignoreRegExpList: []
+
+# includeRegExpList - (Advanced) limits the text checked to be only that matching the expressions in the list.
+includeRegExpList: []
+
+# patterns - this allows you to define named patterns to be used with ignoreRegExpList and includeRegExpList.
+patterns: []
+
+# languageSettings - this allow for per programming language configuration settings. See https://cspell.org/configuration/language-settings/#LanguageSettings
+languageSettings:
+  - languageId: go
+    # Turn off compound words, because it is only checking strings.
+    allowCompoundWords: false
+    # Only check comments and strings
+    includeRegExpList:
+      - CStyleComment
+      - string
+    ignoreRegExpList:
+      # ignore mulltiline imports
+      - "import\\s*\\((.|[\r\n])*?\\)"
+      # ignore single line imports
+      - "import\\s*.*\".*?\""
+      # ignore go generate directive
+      - "//\\s*go:generate.*"
+      # ignore nolint directive
+      - "//\\s*nolint:.*"

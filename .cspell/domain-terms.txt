@@ -1,0 +1,13 @@
+direnv
+jsonschema
+justfile
+outputers
+rego
+tfexec
+tfstate
+cultureamp
+gjson
+shoutysnakecase
+otiai
+applyable
+envrc

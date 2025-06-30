@@ -1,0 +1,59 @@
+# Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+*.a
+*.o
+
+# Go modules and caches
+/go.work
+/go.work.sum
+/go/pkg
+/go/bin
+*.log
+*.cache
+
+# Build output directories
+bin/
+dist/
+artifacts/
+coverage/
+profile.cov
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*.bak
+*.log
+*.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode
+.idea/
+*.iml
+
+# Git hooks and security files (Optional)
+.hooks/
+.gpg-id
+*.key
+*.pem
+*.crt
+
+# GoReleaser and CI artifacts (if using GoReleaser)
+dist/
+release/
+*.sig
+checksums.txt
+
+# environment files
+.env
+.envrc.private
+
+# devbox
+.devbox/

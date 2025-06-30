@@ -1,0 +1,15 @@
+goroot
+goos
+goarch
+golangci
+goimports
+gotestfmt
+golines
+ldflags
+groupf
+failuref
+closedf
+setaf
+covermode
+coverprofile
+goreleaser
