@@ -111,6 +111,11 @@ build-all: download
         done; \
     done
 
+# Build and release the plugin using Goreleaser
+[group('golang')]
+release: tidy
+    goreleaser release --snapshot --clean --draft
+
 # Running
 
 # Build and run for a specific OS/arch (internal helper)
