@@ -35,6 +35,7 @@ jobs:
         uses: go-semantic-release/action@2e9dc4247a6004f8377781bef4cb9dad273a741f # v1.24.1
         with:
           hooks: goreleaser
+          allow-initial-development-versions: true
           prerelease: ${{ github.ref_name == 'main' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
