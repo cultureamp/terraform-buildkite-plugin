@@ -78,7 +78,7 @@ jobs:
       - name: Run Tests
         run: |
           set -euo pipefail
-          gotestsum --junitfile test-results.xml --format github-actions -- -v -tags="e2e,integration" ./...
+          go tool gotest.tools/gotestsum --junitfile test-results.xml --format github-actions -- -v -tags="e2e,integration" ./...
 
       # Generate test report annotations in GitHub UI
       - name: Test Report
