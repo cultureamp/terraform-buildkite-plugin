@@ -61,8 +61,8 @@ jobs:
           add-paths: CHANGELOG.md
           base: main
           branch: pre-release
-          commit-message: "chore(release): prepare changelog for ${{ steps.semrel.outputs.version }}"
-          title: "chore: prepare release v${{ steps.semrel.outputs.version }}"
+          commit-message: "chore(release): update changelog for ${{ steps.semrel.outputs.version }}"
+          title: "chore(release): prepare release v${{ steps.semrel.outputs.version }}"
           body: |
             ## 🚀 Release Preview: v${{ steps.semrel.outputs.version }}
 
