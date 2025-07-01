@@ -81,5 +81,5 @@ jobs:
 
             </details>
           labels: bot,release
-          # TODO: replace this token with a non PAT token)
+          # TODO: replace this token with a non PAT token
           token: ${{ secrets.PULL_REQUEST_BOT_GITHUB_TOKEN }}
