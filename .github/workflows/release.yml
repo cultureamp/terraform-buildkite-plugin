@@ -49,7 +49,7 @@ jobs:
         id: git-cliff
         with:
           version: latest
-          args: -vv --latest --prepend CHANGELOG.md --no-exec # https://git-cliff.org/docs/usage/args
+          args: -v --latest --prepend CHANGELOG.md --no-exec # https://git-cliff.org/docs/usage/args
         env:
           GITHUB_REPO: ${{ github.repository }}
 
