@@ -99,12 +99,11 @@ jobs:
     uses: ./.github/workflows/go-checks.yml
     secrets: inherit
 
-  release:
+  pre-release:
     needs: [find-changed-files]
     if: |
-      github.ref == 'refs/heads/main' ||
-      needs.find-changed-files.outputs.release_any_changed == 'true'
-    uses: ./.github/workflows/release.yml
+      github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/pre-release.yml
     secrets: inherit
 
   pipeline-success:
@@ -115,12 +114,12 @@ jobs:
       - action
       - cspell
       - scripts
-      - release
+      - pre-release
     if: always()
     steps:
       - name: Decide whether the needed jobs succeeded or failed
         uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe # v1
         id: check-pipeline
         with:
-          allowed-skips: "markdown,golang,action,cspell,scripts,release"
+          allowed-skips: "markdown,golang,action,cspell,scripts,pre-release"
           jobs: ${{ toJSON(needs) }}
