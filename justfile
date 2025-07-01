@@ -147,7 +147,7 @@ lint-shellcheck:
 # Run actionlint for linting github action files
 [group('lint')]
 [group('tools')]
-lint-github-actions:
+lint-actions:
     actionlint
 
 # Run Buildkite plugin linting (requires Docker)
@@ -158,7 +158,7 @@ lint-buildkite-plugin:
 
 # Run all linting commands (Go, spellcheck, markdown)
 [group('lint')]
-lint: lint-go lint-cspell lint-markdown lint-buildkite-plugin lint-shellcheck lint-github-actions
+lint: lint-go lint-cspell lint-markdown lint-buildkite-plugin lint-shellcheck lint-actions
 
 # Formatting and Static Analysis
 
