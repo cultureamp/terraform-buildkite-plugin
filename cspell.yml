@@ -24,6 +24,7 @@ ignorePaths:
   - go.sum
   - LICENSE
   - .golangci.yml
+  - CHANGELOG.md
 
 # defaults to 100 per file.
 maxNumberOfProblems: 100
