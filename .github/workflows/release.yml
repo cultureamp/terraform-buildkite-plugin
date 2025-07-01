@@ -1,21 +1,51 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 ---
-name: release
-run-name: release ${{ github.sha }} by @${{ github.actor }}
+name: debug-release
+run-name: debug-release ${{ github.sha }} by @${{ github.actor }}
 
 on:
-  pull_request:
+  push:
     branches:
-      # temporary for now to validate the workflow
-      - ci/enable-all-tests-on-pre-release
-    types:
-      - closed
+      - test-main
 
-# Later, in the jobs section of your actions.yml file.
 jobs:
-  if_merged:
-    if: github.event.pull_request.merged == true
+  debug-merge:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo The PR was successfully merged.
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 20 # enough to see recent history
+
+      - name: Print commit message and metadata
+        run: |
+          echo "🔍 Commit SHA: ${{ github.sha }}"
+          echo "📝 Commit Message:"
+          git log -1 --pretty=%B
+
+      - name: Show parent commit(s)
+        run: |
+          echo "🔗 Parent Commits:"
+          git rev-list --parents -n 1 ${{ github.sha }}
+
+      - name: Show if merge commit
+        run: |
+          COUNT=$(git rev-list --parents -n 1 ${{ github.sha }} | wc -w)
+          if [ "$COUNT" -eq 3 ]; then
+            echo "✅ This is a merge commit."
+          else
+            echo "ℹ️ This is NOT a merge commit (likely squash or rebase)."
+          fi
+
+      - name: Print parent commit info
+        run: |
+          PARENTS=$(git rev-list --parents -n 1 ${{ github.sha }})
+          MERGED_COMMIT=$(echo "$PARENTS" | cut -d' ' -f3)
+          echo "🧬 Merged Commit SHA (2nd parent): $MERGED_COMMIT"
+          echo "🔖 Branch pointing to that commit (if any):"
+          git branch -r --contains $MERGED_COMMIT || echo "(no remote branches contain it)"
+
+      - name: Print commit history (last 5)
+        run: |
+          echo "📜 Last 5 commits on debug-main:"
+          git log -n 5 --graph --oneline --decorate
