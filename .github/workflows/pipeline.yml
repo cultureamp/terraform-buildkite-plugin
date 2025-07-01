@@ -16,7 +16,6 @@ jobs:
       action_any_changed: ${{ steps.changed-files.outputs.action_any_changed }}
       cspell_any_changed: ${{ steps.changed-files.outputs.cspell_any_changed }}
       scripts_any_changed: ${{ steps.changed-files.outputs.scripts_any_changed }}
-      release_any_changed: ${{ steps.changed-files.outputs.release_any_changed }}
       any_changed: ${{ steps.changed-files.outputs.any_changed }}
 
     steps:
@@ -55,9 +54,6 @@ jobs:
               - '**.sh'
               - '**.bash'
               - 'hooks/**'
-            release:
-              - '.github/workflows/release.yml'
-              - '.goreleaser.yml'
 
   markdown:
     needs: [find-changed-files]
