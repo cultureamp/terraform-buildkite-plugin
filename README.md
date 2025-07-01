@@ -102,4 +102,4 @@ Terraform execution options:
 
 ## Placeholder
 
-Some change needs more change
+Some change needs more change - is squash best?
