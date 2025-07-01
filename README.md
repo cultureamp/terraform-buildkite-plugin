@@ -102,4 +102,4 @@ Terraform execution options:
 
 ## Placeholder
 
-Some change needs more change - no rebase is the bestest
+Some change needs more change - no rebase is the best
