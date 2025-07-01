@@ -25,7 +25,7 @@ Add the following lines to your `pipeline.yml`:
 steps:
   - label: ":terraform: Plan infrastructure"
     plugins:
-      - cultureamp/terraform#v0.0.1:
+      - cultureamp/terraform#v0.1.0:
           mode: plan
           working:
             directories:

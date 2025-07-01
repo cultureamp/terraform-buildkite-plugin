@@ -214,6 +214,11 @@ test: test-full test-scripts
 generate-schema:
     go run ./tools/schema/
 
+# Generate the changelog using git-cliff
+[group('tools')]
+changelog:
+    git-cliff --latest --prepend CHANGELOG.md --no-exec
+
 # Remove build artifacts and coverage files
 [group('golang')]
 clean:
