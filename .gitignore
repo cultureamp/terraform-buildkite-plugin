@@ -8,6 +8,7 @@
 *.out
 *.a
 *.o
+.semrel
 
 # Go modules and caches
 /go.work
