@@ -61,14 +61,23 @@ jobs:
           add-paths: CHANGELOG.md
           base: main
           branch: pre-release
+          labels: bot,release
           commit-message: "chore(release): prepare changelog for ${{ steps.semrel.outputs.version }}"
           title: "chore: prepare release v${{ steps.semrel.outputs.version }}"
           body: |
-            :robot: This PR prepares the next release.
+            ## 🚀 Release Preview: v${{ steps.semrel.outputs.version }}
 
-            ## Proposed Version: `${{ steps.semrel.outputs.version }}`
+            This pull request was automatically generated to prepare the next release.
 
-            <details><summary>Changelog Details</summary>
+            It includes:
+            - An updated `CHANGELOG.md` with changes since the last release
+            - A proposed version bump to `v${{ steps.semrel.outputs.version }}` based on commit history
+
+            Once approved and merged into the `pre-release` branch, the release process will be triggered automatically.
+
+            <details>
+            <summary>📝 Full Changelog</summary>
 
             ${{ steps.git-cliff.outputs.content }}
+
             </details>
