@@ -6,8 +6,15 @@ updates:
     schedule:
       interval: "weekly"
       time: "22:00" # 10pm UTC
+    labels:
+      - "dependencies"
+      - "go"
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+      time: "22:00" # 10pm UTC
+    labels:
+      - "dependencies"
+      - "github-actions"
