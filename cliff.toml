@@ -9,6 +9,7 @@ repo = "terraform-buildkite-plugin"
 # A Tera template to be rendered as the changelog's header.
 # See https://keats.github.io/tera/docs/#introduction
 header = """
+<!-- markdownlint-disable line-length-->
 # Changelog\n
 All notable changes to this project will be documented in this file.
 
@@ -23,14 +24,14 @@ body = """
 {%- endmacro -%}
 
 {% if version -%}
-    ## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}\n
+    ## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
 {% else -%}
     ## [Unreleased]
 {% endif -%}
 
 {% for group, commits in commits | group_by(attribute="group") %}
-    ### {{ group | upper_first }}\n
-    {%- for commit in commits %}
+    ### {{ group | upper_first }}
+    {% for commit in commits %}
         - {{ commit.message | split(pat="\n") | first | upper_first | trim }}\
             {% if commit.remote.username %} by @{{ commit.remote.username }}{%- endif -%}
             {% if commit.remote.pr_number %} in \
@@ -40,8 +41,8 @@ body = """
 {% endfor %}
 
 {%- if github.contributors | filter(attribute="is_first_time", value=true) | length != 0 %}
-  ## New Contributors\n
-{%- endif -%}
+  ## New Contributors
+{% endif -%}
 
 {% for contributor in github.contributors | filter(attribute="is_first_time", value=true) %}
   - @{{ contributor.username }} made their first contribution
