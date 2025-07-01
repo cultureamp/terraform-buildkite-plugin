@@ -62,6 +62,7 @@ jobs:
   markdown:
     needs: [find-changed-files]
     if: |
+      github.ref == 'refs/heads/pre-release' ||
       github.ref != 'refs/heads/main' &&
       needs.find-changed-files.outputs.markdown_any_changed == 'true'
     uses: ./.github/workflows/markdown.yml
@@ -70,6 +71,7 @@ jobs:
   cspell:
     needs: [find-changed-files]
     if: |
+      github.ref == 'refs/heads/pre-release' ||
       github.ref != 'refs/heads/main' &&
       needs.find-changed-files.outputs.cspell_any_changed == 'true'
     uses: ./.github/workflows/cspell.yml
@@ -78,6 +80,7 @@ jobs:
   action:
     needs: [find-changed-files]
     if: |
+      github.ref == 'refs/heads/pre-release' ||
       github.ref != 'refs/heads/main' &&
       needs.find-changed-files.outputs.action_any_changed == 'true'
     uses: ./.github/workflows/actionlint.yml
@@ -86,6 +89,7 @@ jobs:
   scripts:
     needs: [find-changed-files]
     if: |
+      github.ref == 'refs/heads/pre-release' ||
       github.ref != 'refs/heads/main' &&
       needs.find-changed-files.outputs.scripts_any_changed == 'true'
     uses: ./.github/workflows/scripts.yml
@@ -94,6 +98,7 @@ jobs:
   golang:
     needs: [find-changed-files]
     if: |
+      github.ref == 'refs/heads/pre-release' ||
       github.ref != 'refs/heads/main' &&
       needs.find-changed-files.outputs.golang_any_changed == 'true'
     uses: ./.github/workflows/go-checks.yml
