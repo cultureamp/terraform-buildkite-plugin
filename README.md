@@ -99,3 +99,7 @@ Terraform execution options:
 - `init_options` (object) - Options for terraform init command
   - `plugin_dir` (Required, string) - Directory containing Terraform plugins
   - `get_plugins` (Required, boolean) - Whether to automatically download plugins
+
+## Placeholder
+
+Some change
