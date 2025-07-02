@@ -7,31 +7,7 @@
   },
   "bump-minor-pre-major": true,
   "bump-patch-for-minor-pre-major": true,
-  "changelog-sections": [
-    {
-      "type": "feat",
-      "section": "Features"
-    },
-    {
-      "type": "fix",
-      "section": "Bug Fixes"
-    },
-    {
-      "type": "refactor",
-      "section": "Code Refactoring"
-    },
-    {
-      "type": "test",
-      "section": "Tests"
-    },
-    {
-      "type": "docs",
-      "section": "Documentation"
-    },
-    {
-      "type": "chore",
-      "section": "Miscellaneous Chores"
-    }
-  ],
-  "draft-pull-request": true
+  "draft-pull-request": true,
+  "prerelease-type": "beta",
+  "prerelease": true
 }
