@@ -87,9 +87,9 @@ ensure-deps: download tidy
 
 # Building
 
-# Build for a specific OS/arch (internal helper)
+# A private helper to build for a specific OS/arch (internal helper)
 [group('golang')]
-build target_os=go_os target_arch=go_arch: create-bin-dir tidy
+_build target_os=go_os target_arch=go_arch: create-bin-dir tidy
     GOARCH={{ target_arch }} \
     GOOS={{ target_os }} \
     goreleaser build \
@@ -98,6 +98,10 @@ build target_os=go_os target_arch=go_arch: create-bin-dir tidy
     --single-target \
     --output {{ output_bin_base }}
 
+# Build for the plugin binary
+[group('golang')]
+build: _build
+
 # Build and release the plugin using goreleaser
 [group('golang')]
 release: tidy
@@ -105,10 +109,14 @@ release: tidy
 
 # Running
 
-# Build and run for a specific OS/arch (internal helper)
+# A private helper to build and run for a specific OS/arch (internal helper)
 [group('golang')]
-run target_os=go_os target_arch=go_arch valid_exit_code=valid_exit_code: (build target_os target_arch)
+_run target_os=go_os target_arch=go_arch valid_exit_code=valid_exit_code: (_build target_os target_arch)
     ./{{ output_bin_base }} || [ "$?" -eq {{ valid_exit_code }} ]
+
+# Build and run for the plugin
+[group('golang')]
+run: _run
 
 # Run the plugin in test mode with sample configuration
 [group('golang')]
