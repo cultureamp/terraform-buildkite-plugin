@@ -164,9 +164,15 @@ lint-actions:
 lint-buildkite-plugin:
     @{{ docker-check }} && docker compose run --rm buildkite-plugin-lint || just docker-warning buildkite-plugin-lint
 
+# Run goreleaser check for release configuration
+[group('lint')]
+[group('tools')]
+lint-goreleaser:
+    goreleaser check
+
 # Run all linting commands (Go, spellcheck, markdown)
 [group('lint')]
-lint: lint-go lint-cspell lint-markdown lint-buildkite-plugin lint-shellcheck lint-actions
+lint: lint-go lint-cspell lint-markdown lint-buildkite-plugin lint-shellcheck lint-actions lint-goreleaser
 
 # Formatting and Static Analysis
 
