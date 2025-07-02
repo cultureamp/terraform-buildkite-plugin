@@ -17,57 +17,63 @@
   "changelog-sections": [
     {
       "section": "🚀 Features",
-      "type": "feat"
+      "type": "feat",
+      "hidden": false
     },
     {
       "section": "🐛 Bug Fixes",
-      "type": "fix"
+      "type": "fix",
+      "hidden": false
     },
     {
       "section": "⚡ Performance Improvements",
-      "type": "perf"
+      "type": "perf",
+      "hidden": false
     },
     {
       "section": "🔗 Dependencies",
-      "type": "deps"
+      "type": "deps",
+      "hidden": false
     },
     {
       "section": "📝 Documentation",
-      "type": "docs"
+      "type": "docs",
+      "hidden": false
     },
     {
       "section": "⏪ Reverts",
-      "type": "revert"
+      "type": "revert",
+      "hidden": false
     },
     {
       "section": "🏗️ Build System",
       "type": "build",
-      "hidden": false
+      "hidden": true
     },
     {
       "section": "🤖 Continuous Integration",
       "type": "ci",
-      "hidden": false
+      "hidden": true
     },
     {
       "section": "🔧 Miscellaneous Chores",
       "type": "chore",
-      "hidden": false
+      "hidden": true
     },
     {
       "section": "✅ Tests",
       "type": "test",
-      "hidden": false
+      "hidden": true
     },
     {
       "section": "💄 Style",
       "type": "style",
-      "hidden": false
+      "hidden": true
     },
     {
       "section": "♻️ Code Refactoring",
       "type": "refactor",
-      "hidden": false
+      "hidden": true
     }
   ]
 }
