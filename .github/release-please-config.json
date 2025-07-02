@@ -9,5 +9,57 @@
   "bump-patch-for-minor-pre-major": true,
   "draft-pull-request": true,
   "prerelease-type": "beta",
-  "prerelease": true
+  "prerelease": true,
+  "always-update": true,
+  "include-v-in-tag": true,
+  "changelog-sections": [
+    {
+      "section": "🎉 Features",
+      "type": "feat"
+    },
+    {
+      "section": "🐛 Bug Fixes",
+      "type": "fix"
+    },
+    {
+      "section": "⚡ Performance Improvements",
+      "type": "perf"
+    },
+    {
+      "section": "🔗 Dependencies",
+      "type": "deps"
+    },
+    {
+      "section": "📝 Documentation",
+      "type": "docs"
+    },
+    {
+      "section": "🏗️ Build System",
+      "type": "build"
+    },
+    {
+      "section": "🤖 Continuous Integration",
+      "type": "ci"
+    },
+    {
+      "section": "🔧 Miscellaneous Chores",
+      "type": "chore"
+    },
+    {
+      "section": "⏪ Reverts",
+      "type": "revert"
+    },
+    {
+      "section": "✅ Tests",
+      "type": "test"
+    },
+    {
+      "section": "💄 Style",
+      "type": "style"
+    },
+    {
+      "section": "♻️ Code Refactoring",
+      "type": "refactor"
+    }
+  ]
 }
