@@ -39,6 +39,12 @@ steps:
             - buildkite_annotation:
                 template: ./path/to/go-template
                 context: ${STEP_ENVIRONMENT}
+                vars:
+                  cluster_name: ${CLUSTER_NAME}
+                computed_vars:
+                  - name: namespace
+                    from: working_dir
+                    regex: ^[^.]+\\.(.+)\\.[^.]+$
 ```
 
 ## Configuration
