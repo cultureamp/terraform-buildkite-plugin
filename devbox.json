@@ -11,7 +11,7 @@
      * go-semantic-release hooks-goreleaser action uses.
      * https://github.com/go-semantic-release/hooks-goreleaser/blob/main/go.mod
      */
-    "goreleaser@2.3.2",
+    "goreleaser@2.10.2",
     "terraform@1.11.4",
     "open-policy-agent@1.4.2",
     /* tools */

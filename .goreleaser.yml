@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/goreleaser/goreleaser/refs/tags/v2.3.2/www/docs/static/schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/goreleaser/goreleaser/refs/tags/v2.10.2/www/docs/static/schema.json
 #
 # Visit https://goreleaser.com for documentation on how to customize this behavior.
 version: 2
@@ -25,8 +25,9 @@ builds:
     binary: "{{ .ProjectName }}-{{ .Os }}-{{ .Arch }}"
 archives:
   - id: no-archive
-    builds:
+    ids:
       - main
-    format: binary
+    formats:
+      - binary
 changelog:
   disable: true

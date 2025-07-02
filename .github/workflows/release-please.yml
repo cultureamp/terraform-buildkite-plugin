@@ -40,9 +40,8 @@ jobs:
           go-version-file: go.mod
           cache-dependency-path: go.sum
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@9c156ee8a17a598857849441385a2041ef570552 # v6.3.0
         with:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{github.token}}
-          DOCKER_IMAGE_REPO: ghcr.io/${{github.repository}}
