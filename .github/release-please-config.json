@@ -12,9 +12,11 @@
   "prerelease": true,
   "always-update": true,
   "include-v-in-tag": true,
+  "pull-request-title-pattern": "chore${scope}: release ${version}",
+  "pull-request-header": ":robot: Auto-generated release PR",
   "changelog-sections": [
     {
-      "section": "🎉 Features",
+      "section": "🚀 Features",
       "type": "feat"
     },
     {
@@ -34,32 +36,38 @@
       "type": "docs"
     },
     {
-      "section": "🏗️ Build System",
-      "type": "build"
-    },
-    {
-      "section": "🤖 Continuous Integration",
-      "type": "ci"
-    },
-    {
-      "section": "🔧 Miscellaneous Chores",
-      "type": "chore"
-    },
-    {
       "section": "⏪ Reverts",
       "type": "revert"
     },
     {
+      "section": "🏗️ Build System",
+      "type": "build",
+      "hidden": false
+    },
+    {
+      "section": "🤖 Continuous Integration",
+      "type": "ci",
+      "hidden": false
+    },
+    {
+      "section": "🔧 Miscellaneous Chores",
+      "type": "chore",
+      "hidden": false
+    },
+    {
       "section": "✅ Tests",
-      "type": "test"
+      "type": "test",
+      "hidden": false
     },
     {
       "section": "💄 Style",
-      "type": "style"
+      "type": "style",
+      "hidden": false
     },
     {
       "section": "♻️ Code Refactoring",
-      "type": "refactor"
+      "type": "refactor",
+      "hidden": false
     }
   ]
 }
