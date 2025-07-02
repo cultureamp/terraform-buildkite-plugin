@@ -29,16 +29,22 @@ steps:
           mode: plan
           working:
             directories:
-              parent_directory: ./terraform
-              name_regex: ".*"
+              parent_directory: ./ops/cdktf.out/stacks
+              name_regex: "^bootstrap"
           validations:
             - opa:
                 bundle: ./policies
                 query: "data.terraform.allow"
           outputs:
             - buildkite_annotation:
-                template: "Plan completed for {{.WorkingDirectory}}"
-                context: terraform-plan
+                template: ./path/to/go-template
+                context: ${STEP_ENVIRONMENT}
+                vars:
+                  - cluster_name: ${CLUSTER_NAME}
+                computed_vars:
+                  - name: namespace
+                    from: working_dir
+                    regex: ^[^.]+\\.(.+)\\.[^.]+$
 ```
 
 ## Configuration
